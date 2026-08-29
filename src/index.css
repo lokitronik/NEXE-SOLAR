@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --brand-navy: #002B49;
+    --brand-navy-dark: #001B2E;
+    --brand-navy-light: #0D3B66;
+    --brand-silver: #9AA0A6;
+    --brand-silver-light: #D1D5DB;
+  }
+  
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  h1, h2, h3, h4, .font-heading {
+    font-family: 'Space Grotesk', 'Plus Jakarta Sans', system-ui, sans-serif;
+    letter-spacing: -0.02em;
+  }
+}
+
+/* Subtle Technical Grid Background */
+.bg-tech-grid {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(203, 213, 225, 0.25) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(203, 213, 225, 0.25) 1px, transparent 1px);
+}
+
+.bg-tech-grid-dark {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+}
+
+/* Metallic Silver Gradient for the X in NEXE */
+.text-metallic-silver {
+  background: linear-gradient(135deg, #CFD8DC 0%, #90A4AE 35%, #ECEFF1 65%, #78909C 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

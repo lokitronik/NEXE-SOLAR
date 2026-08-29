@@ -1,0 +1,6 @@
+{
+  "name": "NEXE SOLAR",
+  "description": "Professionell installation av solpaneler, DC-kablage, underhåll och förebyggande tjänster för företag och solcellsprojekt i Sverige.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
