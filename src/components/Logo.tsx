@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import logoPng from '.public/logo-solar.png';
+import React from 'react';
+import logoSolar from './logo solar.png';
 
 interface LogoProps {
   variant?: 'light' | 'dark';
@@ -13,8 +13,6 @@ export const Logo: React.FC<LogoProps> = ({
   size = 'md',
   className = '',
 }) => {
-  const [imgError, setImgError] = useState(false);
-
   // Height mappings for responsive sizing
   const heightMap = {
     sm: 'h-8 sm:h-9 max-h-9',
@@ -25,27 +23,13 @@ export const Logo: React.FC<LogoProps> = ({
 
   return (
     <div className={`inline-flex items-center select-none ${className}`}>
-      {!imgError ? (
-        <img
-          src={logoPng}
-          alt="NEXE SOLAR"
-          className={`w-auto ${heightMap[size]} object-contain block transition-transform duration-200`}
-          loading="eager"
-          decoding="sync"
-          onError={() => {
-            // If the imported bundle path fails in any iframe sandbox, fallback to root public path
-            setImgError(true);
-          }}
-        />
-      ) : (
-        <img
-          src="/logo-solar.png"
-          alt="NEXE SOLAR"
-          className={`w-auto ${heightMap[size]} object-contain block transition-transform duration-200`}
-          loading="eager"
-          decoding="sync"
-        />
-      )}
+      <img
+        src={logoSolar}
+        alt="NEXE SOLAR"
+        className={`w-auto ${heightMap[size]} object-contain block transition-transform duration-200`}
+        loading="eager"
+        decoding="sync"
+      />
     </div>
   );
 };
