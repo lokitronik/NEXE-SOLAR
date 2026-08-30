@@ -22,38 +22,42 @@ export const Services: React.FC = () => {
   return (
     <section
       id="tjanster"
-      className="py-24 sm:py-32 bg-white border-b border-slate-200 scroll-mt-16"
+      aria-labelledby="services-section-heading"
+      className="py-16 sm:py-24 lg:py-32 bg-white border-b border-slate-200 scroll-mt-20"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
         
         {/* Headline */}
-        <div className="mb-14 sm:mb-20">
+        <div className="mb-10 sm:mb-16 lg:mb-20">
           <div className="inline-flex items-center gap-2 mb-3">
-            <span className="text-xs font-mono font-bold tracking-[0.2em] text-slate-500 uppercase">
+            <span className="text-[11px] sm:text-xs font-mono font-bold tracking-[0.2em] text-slate-500 uppercase">
               03 / VÅRT ERBJUDANDE
             </span>
           </div>
-          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-[#002B49] tracking-tight font-heading">
+          <h2
+            id="services-section-heading"
+            className="text-2xl xs:text-3xl sm:text-5xl lg:text-6xl font-extrabold text-[#002B49] tracking-tight font-heading break-words"
+          >
             TJÄNSTER
           </h2>
         </div>
 
-        {/* 3 Large Service Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+        {/* 3 Service Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">
           {services.map((service) => (
-            <div
+            <article
               key={service.id}
-              className="bg-slate-50 border border-slate-200/90 hover:border-slate-300 p-8 sm:p-10 rounded-xs flex flex-col justify-between transition-colors min-h-[320px] sm:min-h-[360px]"
+              className="bg-slate-50 border border-slate-200/90 hover:border-slate-300 p-6 sm:p-8 lg:p-10 rounded-xs flex flex-col justify-between transition-colors min-h-[260px] sm:min-h-[320px]"
             >
               <div>
-                <div className="flex items-center justify-between pb-5 mb-7 border-b border-slate-200">
+                <div className="flex items-center justify-between pb-4 sm:pb-5 mb-5 sm:mb-7 border-b border-slate-200">
                   <span className="text-xs font-mono font-bold text-[#002B49] tracking-widest">
                     {service.id}
                   </span>
-                  <div className="w-1.5 h-1.5 rounded-full bg-slate-400" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-slate-400" aria-hidden="true" />
                 </div>
 
-                <h3 className="text-lg sm:text-xl font-extrabold text-[#002B49] font-heading tracking-tight mb-4 leading-snug">
+                <h3 className="text-base sm:text-lg lg:text-xl font-extrabold text-[#002B49] font-heading tracking-tight mb-3 sm:mb-4 leading-snug">
                   {service.title}
                 </h3>
 
@@ -62,12 +66,12 @@ export const Services: React.FC = () => {
                 </p>
               </div>
 
-              <div className="pt-6 mt-6 border-t border-slate-200/60">
-                <span className="text-[11px] font-mono uppercase tracking-widest text-slate-500 font-medium">
+              <div className="pt-4 sm:pt-6 mt-4 sm:mt-6 border-t border-slate-200/60">
+                <span className="text-[10px] sm:text-[11px] font-mono uppercase tracking-widest text-slate-500 font-medium">
                   NEXE FÄLTTEAM
                 </span>
               </div>
-            </div>
+            </article>
           ))}
         </div>
 
@@ -75,4 +79,5 @@ export const Services: React.FC = () => {
     </section>
   );
 };
+
 

@@ -3,24 +3,30 @@ import { Logo } from './Logo';
 
 export const Footer: React.FC = () => {
   return (
-    <footer id="main-footer" className="bg-white py-14 text-center">
+    <footer
+      id="main-footer"
+      className="bg-white py-12 sm:py-16 text-center border-t border-slate-100"
+      style={{
+        paddingBottom: 'calc(3rem + env(safe-area-inset-bottom, 0px))',
+      }}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center space-y-4">
         
         <div>
           <Logo variant="dark" size="lg" showSubtext={true} />
         </div>
 
-        <p className="text-xs font-mono text-slate-700 font-medium">
+        <p className="text-xs sm:text-sm font-mono text-slate-700 font-medium">
           En del av NEXE GROUP AB
         </p>
 
         <p className="text-xs font-mono text-slate-500">
-          Sverige
+          Sverige • Professionell Solcellsinstallation
         </p>
 
-        <div className="pt-2 border-t border-slate-200 w-32 mx-auto">
+        <div className="pt-3 border-t border-slate-200 w-36 mx-auto">
           <p className="text-[11px] font-mono text-slate-400">
-            © 2026 NEXE GROUP AB
+            © {new Date().getFullYear()} NEXE GROUP AB
           </p>
         </div>
 
@@ -28,3 +34,4 @@ export const Footer: React.FC = () => {
     </footer>
   );
 };
+
