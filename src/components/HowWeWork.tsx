@@ -10,7 +10,7 @@ export const HowWeWork: React.FC = () => {
     {
       num: '02',
       title: 'PLANERING',
-      description: 'Vi går igenom omfattning, förutsättningar och tidsplan.',
+      description: 'Vi går igenom arbetets omfattning, förutsättningar och tidsplan.',
     },
     {
       num: '03',
@@ -25,16 +25,16 @@ export const HowWeWork: React.FC = () => {
   ];
 
   return (
-    <section id="sa-arbetar-vi" className="py-20 bg-slate-900 text-white relative overflow-hidden border-b border-slate-800 scroll-mt-12">
-      {/* Dark background pattern */}
+    <section id="sa-arbetar-vi" className="py-20 sm:py-28 bg-[#002B49] text-white relative overflow-hidden border-b border-slate-800 scroll-mt-12">
+      {/* Dark background subtle grid */}
       <div className="absolute inset-0 bg-tech-grid-dark opacity-30 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         
-        {/* Header */}
+        {/* Section Header */}
         <div className="max-w-3xl text-left mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-slate-800 border border-slate-700 text-slate-300 text-xs font-mono mb-4">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-xs bg-slate-800/90 border border-slate-700 text-slate-300 text-xs font-mono mb-4">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
             <span>PROCESS</span>
           </div>
 
@@ -43,17 +43,17 @@ export const HowWeWork: React.FC = () => {
           </h2>
         </div>
 
-        {/* 4 Steps Process Grid */}
+        {/* 4 Steps Minimal Linear Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
           {steps.map((step, index) => (
             <div
               key={step.num}
-              className="bg-slate-800/80 border border-slate-700 rounded p-6 sm:p-7 flex flex-col justify-between relative"
+              className="bg-slate-800/70 border border-slate-700/80 p-7 sm:p-8 rounded-xs flex flex-col justify-between"
             >
               <div>
-                {/* Step Number Header */}
-                <div className="flex items-center justify-between pb-4 mb-5 border-b border-slate-700">
-                  <span className="text-2xl font-extrabold font-mono text-slate-300">
+                {/* Step Number */}
+                <div className="flex items-center justify-between pb-4 mb-6 border-b border-slate-700">
+                  <span className="text-2xl font-black font-mono text-slate-200">
                     {step.num}
                   </span>
                   <span className="text-[10px] font-mono uppercase tracking-widest text-slate-400">
@@ -61,7 +61,7 @@ export const HowWeWork: React.FC = () => {
                   </span>
                 </div>
 
-                <h3 className="text-lg font-bold text-white font-heading tracking-tight mb-2.5">
+                <h3 className="text-lg font-bold text-white font-heading tracking-tight mb-3">
                   {step.title}
                 </h3>
 
@@ -70,9 +70,9 @@ export const HowWeWork: React.FC = () => {
                 </p>
               </div>
 
-              <div className="mt-8 pt-3 border-t border-slate-700/50 flex items-center gap-2 text-[10px] font-mono text-slate-400">
-                <span className="w-1.5 h-1.5 rounded-full bg-slate-500"></span>
-                <span>NEXE SOLAR Standard</span>
+              <div className="mt-8 pt-4 border-t border-slate-700/60 flex items-center gap-2 text-[11px] font-mono text-slate-400">
+                <span className="w-1.5 h-1.5 rounded-full bg-slate-500" />
+                <span>NEXE SOLAR Rutin</span>
               </div>
             </div>
           ))}

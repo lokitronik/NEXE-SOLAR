@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, ChevronDown, Check } from 'lucide-react';
+import { ArrowRight, ChevronDown } from 'lucide-react';
 
 interface HeroProps {
   onContactClick: () => void;
@@ -8,108 +8,114 @@ interface HeroProps {
 
 export const Hero: React.FC<HeroProps> = ({ onContactClick, onServicesClick }) => {
   return (
-    <section id="hero" className="relative pt-28 pb-16 md:pt-36 md:pb-24 bg-white border-b border-slate-200">
-      {/* Background technical grid pattern */}
-      <div className="absolute inset-0 bg-tech-grid opacity-60 pointer-events-none" />
+    <section
+      id="hero"
+      className="relative pt-28 sm:pt-36 pb-16 sm:pb-24 bg-white border-b border-slate-200 overflow-hidden"
+    >
+      {/* Background architectural grid */}
+      <div className="absolute inset-0 bg-tech-grid opacity-40 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
           
-          {/* Left Column: Copy & Actions */}
-          <div className="lg:col-span-7 flex flex-col text-left">
+          {/* Left Column: Technical Typography */}
+          <div className="lg:col-span-7 text-left space-y-6 sm:space-y-8">
             
-            {/* Small label: NEXE SOLAR */}
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded bg-slate-100 border border-slate-200 w-fit mb-6">
-              <span className="w-2 h-2 rounded-full bg-[#002B49]" />
-              <span className="text-xs font-bold uppercase tracking-widest text-[#002B49] font-mono">
+            {/* Small Brand Label */}
+            <div className="inline-flex items-center gap-2.5 px-3 py-1 bg-slate-100 border border-slate-200/80 rounded-xs">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#002B49]" />
+              <span className="text-xs font-mono font-bold tracking-widest text-[#002B49] uppercase">
                 NEXE SOLAR
               </span>
-              <span className="text-[11px] text-slate-500 font-mono">| B2B Installation & Underentreprenad</span>
+              <span className="text-slate-300">|</span>
+              <span className="text-[11px] font-mono text-slate-500 uppercase">
+                B2B Installation
+              </span>
             </div>
 
-            {/* Main headline */}
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-[#002B49] tracking-tight leading-[1.08] font-heading mb-6">
-              SOLCELLSINSTALLATION FÖR FÖRETAG.
-            </h1>
+            {/* Main Headline */}
+            <div className="space-y-1">
+              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-[#002B49] tracking-tight leading-[1.04] font-heading">
+                SOLCELLSINSTALLATION
+              </h1>
+              <h2 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-slate-500 tracking-tight leading-[1.04] font-heading">
+                FÖR FÖRETAG.
+              </h2>
+            </div>
 
-            {/* Supporting text */}
-            <p className="text-lg sm:text-xl text-slate-700 font-normal leading-relaxed max-w-2xl mb-8">
+            {/* Supporting Text */}
+            <p className="text-lg sm:text-xl text-slate-700 font-normal leading-relaxed max-w-2xl">
               Installation av solpaneler och DC-kablage. Underhåll och förebyggande tjänster för solcellsanläggningar.
             </p>
 
-            {/* Buttons */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 mb-10">
+            {/* CTA Group */}
+            <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
               <button
                 onClick={onContactClick}
-                id="hero-contact-btn"
-                className="inline-flex items-center justify-center px-7 py-4 text-xs sm:text-sm font-bold uppercase tracking-wider text-white bg-[#002B49] hover:bg-[#001B2E] transition-all rounded active:scale-[0.99] cursor-pointer group shadow-xs"
+                id="hero-primary-cta"
+                className="inline-flex items-center justify-center gap-3 px-8 py-4 text-sm font-bold uppercase tracking-wider text-white bg-[#002B49] hover:bg-[#001B2E] transition-all rounded-xs active:scale-[0.98] cursor-pointer shadow-xs"
               >
                 <span>KONTAKTA OSS</span>
-                <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
+                <ArrowRight className="w-4 h-4 text-slate-300" />
               </button>
 
               <button
                 onClick={onServicesClick}
-                id="hero-services-btn"
-                className="inline-flex items-center justify-center px-7 py-4 text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-800 hover:text-[#002B49] bg-slate-100 hover:bg-slate-200 border border-slate-300 transition-all rounded cursor-pointer"
+                id="hero-secondary-cta"
+                className="inline-flex items-center justify-center gap-2 px-7 py-4 text-sm font-semibold tracking-wider text-[#002B49] bg-slate-100 hover:bg-slate-200/80 border border-slate-200 transition-all rounded-xs active:scale-[0.98] cursor-pointer font-mono"
               >
                 <span>VÅRA TJÄNSTER</span>
-                <ChevronDown className="w-4 h-4 ml-2 text-slate-500" />
+                <ChevronDown className="w-4 h-4 text-slate-500" />
               </button>
             </div>
 
-            {/* Core attributes list */}
-            <div className="pt-6 border-t border-slate-200 grid grid-cols-2 sm:grid-cols-3 gap-4 text-xs font-medium text-slate-700">
-              <div className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-[#002B49] shrink-0" />
-                <span>Montering & takmontage</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-[#002B49] shrink-0" />
-                <span>DC-kablage & dragning</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-[#002B49] shrink-0" />
-                <span>Underhåll & service</span>
-              </div>
+            {/* Subtle Technical Meta Spec Line */}
+            <div className="pt-4 border-t border-slate-200/80 flex flex-wrap items-center gap-y-2 gap-x-6 text-[11px] font-mono text-slate-500">
+              <span className="flex items-center gap-1.5">
+                <span className="w-1 h-1 rounded-full bg-slate-400" />
+                Underentreprenad
+              </span>
+              <span className="flex items-center gap-1.5">
+                <span className="w-1 h-1 rounded-full bg-slate-400" />
+                Takarbete & Fältmontage
+              </span>
+              <span className="flex items-center gap-1.5">
+                <span className="w-1 h-1 rounded-full bg-slate-400" />
+                Sverige
+              </span>
             </div>
 
           </div>
 
-          {/* Right Column: Generic Professional Stock Image of Technicians */}
+          {/* Right Column: ONE large professional rooftop technician image */}
           <div className="lg:col-span-5 relative">
-            <div className="relative rounded-lg overflow-hidden border border-slate-300 bg-slate-100 shadow-lg">
+            <div className="relative border border-slate-200 rounded-xs overflow-hidden bg-slate-100 shadow-sm">
+              <img
+                src="https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&w=1200&q=80"
+                alt="Tekniker utför solcellsinstallation på tak"
+                className="w-full h-[360px] sm:h-[460px] object-cover object-center grayscale-[20%] contrast-[1.05]"
+                referrerPolicy="no-referrer"
+                loading="eager"
+              />
               
-              {/* Technical framing bar */}
-              <div className="bg-[#002B49] text-white px-4 py-2 flex items-center justify-between text-xs font-mono">
-                <span className="flex items-center gap-2 font-medium">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
-                  INSTALLATION PÅ PLATS
-                </span>
-                <span className="text-slate-300 text-[11px]">SVERIGE</span>
-              </div>
-
-              {/* Generic stock image (Image 1 of max 2-3) */}
-              <div className="relative h-72 sm:h-96 w-full">
-                <img
-                  src="https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&w=1200&q=80"
-                  alt="Solcellstekniker installerar solpaneler på tak"
-                  className="w-full h-full object-cover object-center"
-                  referrerPolicy="no-referrer"
-                />
-                
-                <div className="absolute inset-0 bg-gradient-to-t from-[#002B49]/80 via-transparent to-transparent" />
-
-                <div className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-xs p-3.5 rounded border border-slate-200 text-left">
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#002B49] block mb-1">
-                    B2B Installationspartner
-                  </span>
-                  <p className="text-xs text-slate-600 leading-snug">
-                    Praktiskt montage och tekniskt fältarbete för solcellsföretag och entreprenörer.
+              {/* Overlay architectural tag */}
+              <div className="absolute bottom-0 left-0 right-0 p-4 bg-slate-900/85 backdrop-blur-xs border-t border-slate-800 text-white flex items-center justify-between">
+                <div>
+                  <p className="text-xs font-mono font-bold tracking-wider uppercase text-slate-200">
+                    Fältarbete & Montering
+                  </p>
+                  <p className="text-[10px] text-slate-400 font-mono mt-0.5">
+                    Praktisk installation på tak och fastighet
                   </p>
                 </div>
+                <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               </div>
+            </div>
 
+            {/* Decorative technical coordinate accents */}
+            <div className="hidden sm:flex justify-between items-center text-[10px] font-mono text-slate-400 mt-2 px-1">
+              <span>NEXE SOLAR — OPERATION</span>
+              <span>SE / B2B</span>
             </div>
           </div>
 

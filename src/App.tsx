@@ -3,7 +3,6 @@ import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { B2BSection } from './components/B2BSection';
 import { Services } from './components/Services';
-import { ForCompanies } from './components/ForCompanies';
 import { HowWeWork } from './components/HowWeWork';
 import { Experience } from './components/Experience';
 import { Contact } from './components/Contact';
@@ -33,32 +32,29 @@ export default function App() {
 
       {/* Main Single Page Content */}
       <main className="flex-1">
-        {/* Sektion 1: HERO */}
+        {/* 1. Hero */}
         <Hero
           onContactClick={scrollToContact}
           onServicesClick={scrollToServices}
         />
 
-        {/* Sektion 2: B2B SECTION */}
+        {/* 2. B2B / Installation partner */}
         <B2BSection onContactClick={scrollToContact} />
 
-        {/* Sektion 3: TJÄNSTER */}
+        {/* 3. Services */}
         <Services />
 
-        {/* Sektion 4: FÖR FÖRETAG */}
-        <ForCompanies />
-
-        {/* Sektion 5: SÅ ARBETAR VI */}
+        {/* 4. How we work */}
         <HowWeWork />
 
-        {/* Sektion 6: PRAKTISK ERFARENHET */}
+        {/* 5. Experience */}
         <Experience />
 
-        {/* Sektion 7: HAR NI ETT PROJEKT? (KONTAKT) */}
+        {/* 6. Contact */}
         <Contact ref={contactRef} />
       </main>
 
-      {/* Sektion 8: FOOTER */}
+      {/* 7. Footer */}
       <Footer />
     </div>
   );

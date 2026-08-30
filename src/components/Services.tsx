@@ -1,76 +1,69 @@
 import React from 'react';
-import { Sun, Cable, Wrench, ShieldAlert } from 'lucide-react';
+import { Sun, Cable, Wrench, ShieldCheck } from 'lucide-react';
 
 export const Services: React.FC = () => {
-  const services = [
+  const serviceList = [
     {
-      id: 'solcellsinstallation',
+      id: '01',
       title: 'SOLCELLSINSTALLATION',
       description: 'Installation av solpaneler på tak för bostäder, BRF och kommersiella fastigheter.',
       icon: Sun,
-      category: 'Montage & Tak',
     },
     {
-      id: 'dc-kablage',
+      id: '02',
       title: 'DC-KABLAGE',
       description: 'Dragning och installation av DC-kablage i samband med solcellsinstallation.',
       icon: Cable,
-      category: 'Kabeldragning',
     },
     {
-      id: 'underhall-service',
+      id: '03',
       title: 'UNDERHÅLL & SERVICE',
       description: 'Underhåll, kontroll och service av befintliga solcellsanläggningar.',
       icon: Wrench,
-      category: 'Drift & Kontroll',
     },
     {
-      id: 'forebyggande-tjanster',
+      id: '04',
       title: 'FÖREBYGGANDE TJÄNSTER',
       description: 'BirdBlocker, fågelskydd, rengöring av solpaneler och andra förebyggande åtgärder.',
-      icon: ShieldAlert,
-      category: 'Skydd & Rengöring',
+      icon: ShieldCheck,
     },
   ];
 
   return (
-    <section id="tjanster" className="py-20 bg-slate-50 border-b border-slate-200 relative scroll-mt-12">
+    <section id="tjanster" className="py-20 sm:py-28 bg-white border-b border-slate-200 relative scroll-mt-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="max-w-3xl text-left mb-14">
-          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-slate-200/80 text-slate-700 text-xs font-mono mb-3">
+        <div className="max-w-3xl text-left mb-14 sm:mb-16">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-100 border border-slate-200 rounded-xs mb-3">
             <span className="w-1.5 h-1.5 rounded-full bg-[#002B49]" />
-            <span>VÅRT ARBETSOMRÅDE</span>
+            <span className="text-xs font-mono font-bold tracking-wider text-[#002B49] uppercase">
+              KOMPETENSOMRÅDEN
+            </span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#002B49] tracking-tight font-heading mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#002B49] tracking-tight font-heading">
             TJÄNSTER
           </h2>
-
-          <p className="text-base sm:text-lg text-slate-600 leading-relaxed">
-            Vi utför det praktiska arbetet på taket och anläggningen med fokus på säkerhet, noggrannhet och kvalitet.
-          </p>
         </div>
 
-        {/* Four Clean Service Blocks */}
+        {/* 4 Clean Minimal Service Areas */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
-          {services.map((service) => {
+          {serviceList.map((service) => {
             const Icon = service.icon;
             return (
               <div
                 key={service.id}
-                id={`service-${service.id}`}
-                className="bg-white rounded border border-slate-200 p-6 sm:p-7 flex flex-col justify-between shadow-2xs hover:border-slate-300 transition-colors"
+                className="bg-slate-50/70 border border-slate-200 p-7 sm:p-8 rounded-xs flex flex-col justify-between hover:border-slate-300 transition-colors"
               >
                 <div>
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="p-3 bg-slate-100 text-[#002B49] rounded border border-slate-200">
-                      <Icon className="w-6 h-6" />
-                    </div>
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-500 bg-slate-100 px-2 py-0.5 rounded">
-                      {service.category}
+                  <div className="flex items-center justify-between pb-4 mb-6 border-b border-slate-200">
+                    <span className="text-xs font-mono font-bold text-slate-400">
+                      {service.id}
                     </span>
+                    <div className="p-2 bg-white text-[#002B49] rounded-xs border border-slate-200">
+                      <Icon className="w-4 h-4" />
+                    </div>
                   </div>
 
                   <h3 className="text-base sm:text-lg font-bold text-[#002B49] font-heading tracking-tight mb-3">
@@ -82,10 +75,8 @@ export const Services: React.FC = () => {
                   </p>
                 </div>
 
-                <div className="mt-8 pt-4 border-t border-slate-100">
-                  <span className="text-[11px] font-mono text-slate-400">
-                    B2B Utförande
-                  </span>
+                <div className="mt-8 pt-4 border-t border-slate-200/60 text-[11px] font-mono text-slate-500">
+                  <span>Fältarbete • Montering</span>
                 </div>
               </div>
             );
