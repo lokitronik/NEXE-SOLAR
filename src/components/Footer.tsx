@@ -7,7 +7,7 @@ export const Footer: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center space-y-4">
         
         <div>
-          <Logo variant="dark" size="md" showSubtext={true} />
+          <Logo variant="dark" size="lg" showSubtext={true} />
         </div>
 
         <p className="text-xs font-mono text-slate-700 font-medium">

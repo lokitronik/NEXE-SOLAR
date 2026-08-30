@@ -40,10 +40,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
           <a
             href="#hero"
             id="nav-brand-logo"
-            className="flex items-center gap-3.5 focus:outline-none"
+            className="flex items-center focus:outline-none py-0.5"
             aria-label="NEXE SOLAR"
           >
-            <Logo variant="dark" size="sm" />
+            <Logo variant="dark" size="md" className="hover:opacity-90 transition-opacity" />
           </a>
 
           {/* Desktop Nav Items */}

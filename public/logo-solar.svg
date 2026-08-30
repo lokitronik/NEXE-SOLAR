@@ -1,0 +1,190 @@
+<svg viewBox="0 0 760 340" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+  <defs>
+    <!-- Metallic Chrome Ring Gradient -->
+    <linearGradient id="chromeRing" x1="0.1" y1="0.1" x2="0.9" y2="0.9">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="12%" stop-color="#E2E8F0" />
+      <stop offset="28%" stop-color="#94A3B8" />
+      <stop offset="42%" stop-color="#F8FAFC" />
+      <stop offset="55%" stop-color="#64748B" />
+      <stop offset="72%" stop-color="#CBD5E1" />
+      <stop offset="88%" stop-color="#94A3B8" />
+      <stop offset="100%" stop-color="#FFFFFF" />
+    </linearGradient>
+
+    <!-- Chrome Needle Gradients -->
+    <linearGradient id="needleLight" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%" stop-color="#CBD5E1" />
+      <stop offset="30%" stop-color="#FFFFFF" />
+      <stop offset="60%" stop-color="#94A3B8" />
+      <stop offset="85%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#E2E8F0" />
+    </linearGradient>
+    
+    <linearGradient id="needleDark" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%" stop-color="#64748B" />
+      <stop offset="35%" stop-color="#94A3B8" />
+      <stop offset="70%" stop-color="#475569" />
+      <stop offset="100%" stop-color="#64748B" />
+    </linearGradient>
+
+    <!-- Metallic X 3D Facets -->
+    <linearGradient id="xTopGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="60%" stop-color="#CBD5E1" />
+      <stop offset="100%" stop-color="#94A3B8" />
+    </linearGradient>
+
+    <linearGradient id="xLeftGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#94A3B8" />
+      <stop offset="50%" stop-color="#F1F5F9" />
+      <stop offset="100%" stop-color="#64748B" />
+    </linearGradient>
+
+    <linearGradient id="xRightGrad" x1="1" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#E2E8F0" />
+      <stop offset="50%" stop-color="#94A3B8" />
+      <stop offset="100%" stop-color="#475569" />
+    </linearGradient>
+
+    <linearGradient id="xBottomGrad" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#475569" />
+      <stop offset="60%" stop-color="#94A3B8" />
+      <stop offset="100%" stop-color="#E2E8F0" />
+    </linearGradient>
+
+    <filter id="subtleShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#00182A" flood-opacity="0.15" />
+    </filter>
+  </defs>
+
+  <!-- ================= ICON / EMBLEM ================= -->
+  <g transform="translate(10, 0)">
+    <!-- Outer Silver Chrome Ring -->
+    <circle
+      cx="160"
+      cy="165"
+      r="114"
+      stroke="url(#chromeRing)"
+      stroke-width="16"
+      fill="none"
+      filter="url(#subtleShadow)"
+    />
+
+    <!-- Inner Dark Blue Circle -->
+    <circle
+      cx="160"
+      cy="165"
+      r="104"
+      fill="#002B49"
+    />
+
+    <!-- Diagonal Needle (Through Center, Extending Out) -->
+    <g>
+      <!-- Upper Blade of the Needle -->
+      <polygon
+        points="42,286 160,165 278,44 165,160"
+        fill="url(#needleLight)"
+      />
+      <!-- Lower Blade of the Needle -->
+      <polygon
+        points="42,286 165,160 278,44 155,170"
+        fill="url(#needleDark)"
+      />
+      <!-- Center High-Gloss Spine -->
+      <line
+        x1="42"
+        y1="286"
+        x2="278"
+        y2="44"
+        stroke="#FFFFFF"
+        stroke-width="1.8"
+        stroke-linecap="round"
+      />
+    </g>
+  </g>
+
+  <!-- ================= WORDMARK ================= -->
+  <g transform="translate(305, 0)">
+    <!-- ROW 1: N E X E -->
+    <!-- N -->
+    <path
+      d="M 10 172 L 10 52 L 40 52 L 87 134 L 87 52 L 115 52 L 115 172 L 85 172 L 38 90 L 38 172 Z"
+      fill="#002B49"
+    />
+
+    <!-- E1 -->
+    <path
+      d="M 135 172 L 135 52 L 220 52 L 220 76 L 164 76 L 164 100 L 214 100 L 214 124 L 164 124 L 164 148 L 222 148 L 222 172 Z"
+      fill="#002B49"
+    />
+
+    <!-- X (3D Chrome Faceted) -->
+    <g transform="translate(236, 52)" filter="url(#subtleShadow)">
+      <!-- Top Blade -->
+      <polygon
+        points="0,0 36,0 65,60 29,60"
+        fill="url(#xTopGrad)"
+      />
+      <!-- Right Blade -->
+      <polygon
+        points="94,0 130,0 65,60 101,60"
+        fill="url(#xRightGrad)"
+      />
+      <!-- Bottom Blade -->
+      <polygon
+        points="0,120 36,120 65,60 29,60"
+        fill="url(#xLeftGrad)"
+      />
+      <!-- Bottom-Right Blade -->
+      <polygon
+        points="94,120 130,120 65,60 101,60"
+        fill="url(#xBottomGrad)"
+      />
+      <!-- Center Specular Highlight -->
+      <polygon
+        points="65,49 76,60 65,71 54,60"
+        fill="#FFFFFF"
+      />
+    </g>
+
+    <!-- E2 -->
+    <path
+      d="M 388 172 L 388 52 L 473 52 L 473 76 L 417 76 L 417 100 L 467 100 L 467 124 L 417 124 L 417 148 L 475 148 L 475 172 Z"
+      fill="#002B49"
+    />
+
+    <!-- ROW 2: S O L A R -->
+    <g transform="translate(10, 205)">
+      <!-- S -->
+      <path
+        d="M 52 5.5 C 52 5.5 44 0 27 0 C 9 0 0 8 0 21 C 0 38 25 36 33 41 C 41 46 41 49 41 53 C 41 59 33 64 24 64 C 11 64 2 56 2 56 L 0 74 C 0 74 10 80 26 80 C 45 80 61 69 61 51 C 61 33 33 33 25 29 C 19 26 19 22 19 19 C 19 13 25 10 33 10 C 43 10 51 14 51 14 Z"
+        fill="#002B49"
+      />
+
+      <!-- O -->
+      <path
+        d="M 102 40 C 102 18 118 0 140 0 C 162 0 178 18 178 40 C 178 62 162 80 140 80 C 118 80 102 62 102 40 Z M 121 40 C 121 54 129 65 140 65 C 151 65 159 54 159 40 C 159 26 151 15 140 15 C 129 15 121 26 121 40 Z"
+        fill="#002B49"
+      />
+
+      <!-- L -->
+      <path
+        d="M 221 2 L 221 78 L 280 78 L 280 64 L 239 64 L 239 2 Z"
+        fill="#002B49"
+      />
+
+      <!-- A -->
+      <path
+        d="M 338 2 L 308 78 L 327 78 L 335 57 L 369 57 L 377 78 L 396 78 L 366 2 Z M 340 43 L 352 13 L 364 43 Z"
+        fill="#002B49"
+      />
+
+      <!-- R -->
+      <path
+        d="M 426 2 L 426 78 L 445 78 L 445 51 L 464 51 L 482 78 L 503 78 L 484 49 C 495 46 501 38 501 25 C 501 10 488 2 468 2 Z M 445 16 L 467 16 C 476 16 482 19 482 27 C 482 35 476 38 467 38 L 445 38 Z"
+        fill="#002B49"
+      />
+    </g>
+  </g>
+</svg>
