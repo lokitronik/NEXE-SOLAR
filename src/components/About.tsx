@@ -3,10 +3,9 @@ import { Check } from 'lucide-react';
 
 export const About: React.FC = () => {
   const capacityItems = [
-    { title: 'SOLCELLSINSTALLATION', detail: 'Komplett mekaniskt montage på tak' },
-    { title: 'DC-KABLAGE', detail: 'Strukturerad dragning & anslutning' },
-    { title: 'UNDERHÅLL', detail: 'Teknisk översyn & service' },
-    { title: 'FÖREBYGGANDE TJÄNSTER', detail: 'BirdBlocker & förebyggande åtgärder' },
+    { title: 'SOLCELLSINSTALLATION & DC-KABLAGE', detail: 'Komplett takmontage och DC-dragning' },
+    { title: 'UNDERHÅLL & SERVICE', detail: 'Teknisk översyn, kontroll & service' },
+    { title: 'FÖREBYGGANDE TJÄNSTER', detail: 'BirdBlocker, fågelskydd & rengöring' },
   ];
 
   return (
@@ -34,7 +33,7 @@ export const About: React.FC = () => {
           </div>
 
           {/* Simple Visual List */}
-          <div className="pt-4 grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl">
+          <div className="pt-4 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl">
             {capacityItems.map((item) => (
               <div
                 key={item.title}
@@ -44,7 +43,7 @@ export const About: React.FC = () => {
                   <Check className="w-4 h-4" />
                 </div>
                 <div>
-                  <div className="text-base font-bold font-heading text-[#002B49] tracking-tight">
+                  <div className="text-sm sm:text-base font-bold font-heading text-[#002B49] tracking-tight">
                     {item.title}
                   </div>
                   <div className="text-xs text-slate-500 font-normal mt-1">

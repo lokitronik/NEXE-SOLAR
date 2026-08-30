@@ -4,21 +4,16 @@ export const Services: React.FC = () => {
   const services = [
     {
       id: '01',
-      title: 'SOLCELLSINSTALLATION',
-      description: 'Installation av solpaneler på tak för bostäder, BRF och kommersiella fastigheter.',
+      title: 'SOLCELLSINSTALLATION & DC-KABLAGE',
+      description: 'Komplett mekaniskt montage av solpaneler samt dragning och anslutning av DC-kablage på tak för bostäder, BRF och kommersiella fastigheter.',
     },
     {
       id: '02',
-      title: 'DC-KABLAGE',
-      description: 'Dragning och installation av DC-kablage i samband med solcellsinstallation.',
+      title: 'UNDERHÅLL & SERVICE',
+      description: 'Underhåll, kontroll, felsökning och service av befintliga solcellsanläggningar.',
     },
     {
       id: '03',
-      title: 'UNDERHÅLL & SERVICE',
-      description: 'Underhåll, kontroll och service av befintliga solcellsanläggningar.',
-    },
-    {
-      id: '04',
       title: 'FÖREBYGGANDE TJÄNSTER',
       description: 'BirdBlocker, fågelskydd, rengöring av solpaneler och andra förebyggande åtgärder.',
     },
@@ -43,8 +38,8 @@ export const Services: React.FC = () => {
           </h2>
         </div>
 
-        {/* 4 Clean Minimal Large Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+        {/* 3 Large Service Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           {services.map((service) => (
             <div
               key={service.id}
