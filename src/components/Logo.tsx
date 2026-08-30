@@ -1,5 +1,5 @@
 import React from 'react';
-import logoSolar from './logo solar.png';
+import logoSolar from './logo-solar.png';
 
 interface LogoProps {
   variant?: 'light' | 'dark';
