@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import logoPng from './logo-solar.png';
+import logoPng from '.public/logo-solar.png';
 
 interface LogoProps {
   variant?: 'light' | 'dark';
