@@ -1,5 +1,5 @@
 import React, { useState, forwardRef } from 'react';
-import { CheckCircle2, AlertCircle } from 'lucide-react';
+import { CheckCircle2, AlertCircle, Send } from 'lucide-react';
 
 export const Contact = forwardRef<HTMLDivElement>((_, ref) => {
   const [formData, setFormData] = useState({
@@ -9,6 +9,7 @@ export const Contact = forwardRef<HTMLDivElement>((_, ref) => {
     telefon: '',
     projektetsOrt: '',
     antalPaneler: '',
+    planeradStart: '',
     meddelande: '',
   });
 
@@ -41,34 +42,40 @@ export const Contact = forwardRef<HTMLDivElement>((_, ref) => {
     <section
       id="kontakt"
       ref={ref}
-      className="py-20 sm:py-28 bg-white border-b border-slate-200 scroll-mt-12"
+      className="py-24 sm:py-32 bg-white border-b border-slate-200 scroll-mt-16"
     >
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
         
         {/* Header */}
-        <div className="space-y-4 mb-14">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#002B49] tracking-tight font-heading">
+        <div className="space-y-4 mb-16 sm:mb-20">
+          <div className="inline-flex items-center gap-2">
+            <span className="text-xs font-mono font-bold tracking-[0.2em] text-slate-500 uppercase">
+              05 / PROJEKTFÖRFRÅGAN
+            </span>
+          </div>
+
+          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-[#002B49] tracking-tight font-heading leading-[1.08]">
             HAR NI ETT PROJEKT?
           </h2>
 
-          <p className="text-lg sm:text-xl text-slate-700 leading-relaxed font-normal">
+          <p className="text-lg sm:text-2xl text-slate-700 leading-relaxed font-normal pt-1">
             Berätta kort om projektet och vad ni behöver hjälp med.
           </p>
         </div>
 
         {/* Form Container */}
         {isSubmitted ? (
-          <div className="p-10 sm:p-14 bg-slate-50 border border-slate-200 rounded-xs text-center space-y-4">
-            <div className="w-12 h-12 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center mx-auto">
-              <CheckCircle2 className="w-6 h-6" />
+          <div className="p-12 sm:p-16 bg-slate-50 border border-slate-200 rounded-xs text-center space-y-5">
+            <div className="w-14 h-14 bg-emerald-100 text-emerald-800 rounded-full flex items-center justify-center mx-auto">
+              <CheckCircle2 className="w-7 h-7" />
             </div>
-            <h3 className="text-xl font-bold text-[#002B49] font-heading">
+            <h3 className="text-2xl font-bold text-[#002B49] font-heading">
               Tack för er förfrågan
             </h3>
-            <p className="text-sm text-slate-600 max-w-md mx-auto">
-              Vi har tagit emot informationen för {formData.foretag} och återkommer inom kort.
+            <p className="text-base text-slate-600 max-w-md mx-auto leading-relaxed">
+              Vi har tagit emot informationen för <strong>{formData.foretag}</strong> och återkommer snarast möjligt.
             </p>
-            <div className="pt-2">
+            <div className="pt-4">
               <button
                 type="button"
                 onClick={() => {
@@ -80,6 +87,7 @@ export const Contact = forwardRef<HTMLDivElement>((_, ref) => {
                     telefon: '',
                     projektetsOrt: '',
                     antalPaneler: '',
+                    planeradStart: '',
                     meddelande: '',
                   });
                 }}
@@ -90,7 +98,7 @@ export const Contact = forwardRef<HTMLDivElement>((_, ref) => {
             </div>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="bg-slate-50 border border-slate-200/90 p-8 sm:p-12 lg:p-14 rounded-xs space-y-8 shadow-xs">
             
             {errorMessage && (
               <div className="p-4 bg-red-50 border border-red-200 rounded-xs flex items-center gap-3 text-xs text-red-700 font-medium">
@@ -100,11 +108,11 @@ export const Contact = forwardRef<HTMLDivElement>((_, ref) => {
             )}
 
             {/* Row 1: Företag & Kontaktperson */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
               <div>
                 <label
                   htmlFor="field-foretag"
-                  className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-700 mb-2"
+                  className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-800 mb-2.5"
                 >
                   Företag <span className="text-red-500">*</span>
                 </label>
@@ -116,14 +124,14 @@ export const Contact = forwardRef<HTMLDivElement>((_, ref) => {
                   value={formData.foretag}
                   onChange={handleChange}
                   placeholder="Företagsnamn"
-                  className="w-full bg-white border border-slate-300 focus:border-[#002B49] focus:ring-1 focus:ring-[#002B49] rounded-xs px-4 py-3 text-sm text-slate-900 placeholder-slate-400 outline-none transition-colors"
+                  className="w-full bg-white border border-slate-300 focus:border-[#002B49] focus:ring-1 focus:ring-[#002B49] rounded-xs px-4 py-3.5 text-base text-slate-900 placeholder-slate-400 outline-none transition-colors"
                 />
               </div>
 
               <div>
                 <label
                   htmlFor="field-kontaktperson"
-                  className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-700 mb-2"
+                  className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-800 mb-2.5"
                 >
                   Kontaktperson <span className="text-red-500">*</span>
                 </label>
@@ -134,18 +142,18 @@ export const Contact = forwardRef<HTMLDivElement>((_, ref) => {
                   required
                   value={formData.kontaktperson}
                   onChange={handleChange}
-                  placeholder="Namn"
-                  className="w-full bg-white border border-slate-300 focus:border-[#002B49] focus:ring-1 focus:ring-[#002B49] rounded-xs px-4 py-3 text-sm text-slate-900 placeholder-slate-400 outline-none transition-colors"
+                  placeholder="För- och efternamn"
+                  className="w-full bg-white border border-slate-300 focus:border-[#002B49] focus:ring-1 focus:ring-[#002B49] rounded-xs px-4 py-3.5 text-base text-slate-900 placeholder-slate-400 outline-none transition-colors"
                 />
               </div>
             </div>
 
             {/* Row 2: E-post & Telefon */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
               <div>
                 <label
                   htmlFor="field-epost"
-                  className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-700 mb-2"
+                  className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-800 mb-2.5"
                 >
                   E-post <span className="text-red-500">*</span>
                 </label>
@@ -157,14 +165,14 @@ export const Contact = forwardRef<HTMLDivElement>((_, ref) => {
                   value={formData.epost}
                   onChange={handleChange}
                   placeholder="namn@foretag.se"
-                  className="w-full bg-white border border-slate-300 focus:border-[#002B49] focus:ring-1 focus:ring-[#002B49] rounded-xs px-4 py-3 text-sm text-slate-900 placeholder-slate-400 outline-none transition-colors"
+                  className="w-full bg-white border border-slate-300 focus:border-[#002B49] focus:ring-1 focus:ring-[#002B49] rounded-xs px-4 py-3.5 text-base text-slate-900 placeholder-slate-400 outline-none transition-colors"
                 />
               </div>
 
               <div>
                 <label
                   htmlFor="field-telefon"
-                  className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-700 mb-2"
+                  className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-800 mb-2.5"
                 >
                   Telefon <span className="text-red-500">*</span>
                 </label>
@@ -175,18 +183,18 @@ export const Contact = forwardRef<HTMLDivElement>((_, ref) => {
                   required
                   value={formData.telefon}
                   onChange={handleChange}
-                  placeholder="Telefonnummer"
-                  className="w-full bg-white border border-slate-300 focus:border-[#002B49] focus:ring-1 focus:ring-[#002B49] rounded-xs px-4 py-3 text-sm text-slate-900 placeholder-slate-400 outline-none transition-colors"
+                  placeholder="07X-XXX XX XX"
+                  className="w-full bg-white border border-slate-300 focus:border-[#002B49] focus:ring-1 focus:ring-[#002B49] rounded-xs px-4 py-3.5 text-base text-slate-900 placeholder-slate-400 outline-none transition-colors"
                 />
               </div>
             </div>
 
-            {/* Row 3: Projektets ort & Antal paneler */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {/* Row 3: Projektets ort, Antal paneler, Planerad start */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
               <div>
                 <label
                   htmlFor="field-ort"
-                  className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-700 mb-2"
+                  className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-800 mb-2.5"
                 >
                   Projektets ort
                 </label>
@@ -196,15 +204,15 @@ export const Contact = forwardRef<HTMLDivElement>((_, ref) => {
                   name="projektetsOrt"
                   value={formData.projektetsOrt}
                   onChange={handleChange}
-                  placeholder="Ort"
-                  className="w-full bg-white border border-slate-300 focus:border-[#002B49] focus:ring-1 focus:ring-[#002B49] rounded-xs px-4 py-3 text-sm text-slate-900 placeholder-slate-400 outline-none transition-colors"
+                  placeholder="T.ex. Stockholm, Malmö..."
+                  className="w-full bg-white border border-slate-300 focus:border-[#002B49] focus:ring-1 focus:ring-[#002B49] rounded-xs px-4 py-3.5 text-base text-slate-900 placeholder-slate-400 outline-none transition-colors"
                 />
               </div>
 
               <div>
                 <label
                   htmlFor="field-paneler"
-                  className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-700 mb-2"
+                  className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-800 mb-2.5"
                 >
                   Antal paneler
                 </label>
@@ -214,8 +222,26 @@ export const Contact = forwardRef<HTMLDivElement>((_, ref) => {
                   name="antalPaneler"
                   value={formData.antalPaneler}
                   onChange={handleChange}
-                  placeholder="Antal"
-                  className="w-full bg-white border border-slate-300 focus:border-[#002B49] focus:ring-1 focus:ring-[#002B49] rounded-xs px-4 py-3 text-sm text-slate-900 placeholder-slate-400 outline-none transition-colors"
+                  placeholder="T.ex. 50 st, 200 st..."
+                  className="w-full bg-white border border-slate-300 focus:border-[#002B49] focus:ring-1 focus:ring-[#002B49] rounded-xs px-4 py-3.5 text-base text-slate-900 placeholder-slate-400 outline-none transition-colors"
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="field-start"
+                  className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-800 mb-2.5"
+                >
+                  Planerad start
+                </label>
+                <input
+                  type="text"
+                  id="field-start"
+                  name="planeradStart"
+                  value={formData.planeradStart}
+                  onChange={handleChange}
+                  placeholder="T.ex. Q2, Omgående..."
+                  className="w-full bg-white border border-slate-300 focus:border-[#002B49] focus:ring-1 focus:ring-[#002B49] rounded-xs px-4 py-3.5 text-base text-slate-900 placeholder-slate-400 outline-none transition-colors"
                 />
               </div>
             </div>
@@ -224,7 +250,7 @@ export const Contact = forwardRef<HTMLDivElement>((_, ref) => {
             <div>
               <label
                 htmlFor="field-meddelande"
-                className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-700 mb-2"
+                className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-800 mb-2.5"
               >
                 Meddelande
               </label>
@@ -234,8 +260,8 @@ export const Contact = forwardRef<HTMLDivElement>((_, ref) => {
                 rows={5}
                 value={formData.meddelande}
                 onChange={handleChange}
-                placeholder="Beskriv projektet..."
-                className="w-full bg-white border border-slate-300 focus:border-[#002B49] focus:ring-1 focus:ring-[#002B49] rounded-xs px-4 py-3 text-sm text-slate-900 placeholder-slate-400 outline-none transition-colors resize-y"
+                placeholder="Beskriv ert projekt och vad ni behöver hjälp med..."
+                className="w-full bg-white border border-slate-300 focus:border-[#002B49] focus:ring-1 focus:ring-[#002B49] rounded-xs px-4 py-3.5 text-base text-slate-900 placeholder-slate-400 outline-none transition-colors resize-y"
               />
             </div>
 
@@ -245,9 +271,10 @@ export const Contact = forwardRef<HTMLDivElement>((_, ref) => {
                 type="submit"
                 id="contact-submit-button"
                 disabled={isSubmitting}
-                className="w-full sm:w-auto px-10 py-4 text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-white bg-[#002B49] hover:bg-[#001D33] transition-colors rounded-xs cursor-pointer disabled:opacity-60"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-12 py-4.5 text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-white bg-[#002B49] hover:bg-[#001D33] transition-colors rounded-xs cursor-pointer disabled:opacity-60 shadow-xs"
               >
-                {isSubmitting ? 'SKICKAR...' : 'SKICKA FÖRFRÅGAN'}
+                <span>{isSubmitting ? 'SKICKAR...' : 'SKICKA FÖRFRÅGAN'}</span>
+                <Send className="w-4 h-4 text-slate-300" />
               </button>
             </div>
 
@@ -260,3 +287,4 @@ export const Contact = forwardRef<HTMLDivElement>((_, ref) => {
 });
 
 Contact.displayName = 'Contact';
+

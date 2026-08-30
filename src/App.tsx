@@ -17,6 +17,13 @@ export default function App() {
     }
   };
 
+  const scrollToServices = () => {
+    const servicesElem = document.getElementById('tjanster');
+    if (servicesElem) {
+      servicesElem.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-white text-slate-900 selection:bg-[#002B49] selection:text-white">
       {/* Navigation */}
@@ -25,7 +32,7 @@ export default function App() {
       {/* Main Single Page Content - ONLY 5 SECTIONS */}
       <main className="flex-1">
         {/* 1. HERO */}
-        <Hero onContactClick={scrollToContact} />
+        <Hero onContactClick={scrollToContact} onServicesClick={scrollToServices} />
 
         {/* 2. INSTALLATIONSPARTNER */}
         <InstallationPartner />
@@ -33,7 +40,7 @@ export default function App() {
         {/* 3. TJÄNSTER */}
         <Services />
 
-        {/* 4. OM NEXE SOLAR */}
+        {/* 4. OM NEXE SOLAR / KAPACITET */}
         <About />
 
         {/* 5. CONTACT */}
@@ -45,3 +52,4 @@ export default function App() {
     </div>
   );
 }
+
