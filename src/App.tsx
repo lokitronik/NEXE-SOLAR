@@ -1,10 +1,9 @@
 import React, { useRef } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
-import { B2BSection } from './components/B2BSection';
+import { InstallationPartner } from './components/InstallationPartner';
 import { Services } from './components/Services';
-import { HowWeWork } from './components/HowWeWork';
-import { Experience } from './components/Experience';
+import { About } from './components/About';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 
@@ -18,43 +17,30 @@ export default function App() {
     }
   };
 
-  const scrollToServices = () => {
-    const servicesElem = document.getElementById('tjanster');
-    if (servicesElem) {
-      servicesElem.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 selection:bg-[#002B49] selection:text-white">
-      {/* Fixed top navigation */}
+    <div className="min-h-screen flex flex-col bg-white text-slate-900 selection:bg-[#002B49] selection:text-white">
+      {/* Navigation */}
       <Navbar onContactClick={scrollToContact} />
 
-      {/* Main Single Page Content */}
+      {/* Main Single Page Content - ONLY 5 SECTIONS */}
       <main className="flex-1">
-        {/* 1. Hero */}
-        <Hero
-          onContactClick={scrollToContact}
-          onServicesClick={scrollToServices}
-        />
+        {/* 1. HERO */}
+        <Hero onContactClick={scrollToContact} />
 
-        {/* 2. B2B / Installation partner */}
-        <B2BSection onContactClick={scrollToContact} />
+        {/* 2. INSTALLATIONSPARTNER */}
+        <InstallationPartner />
 
-        {/* 3. Services */}
+        {/* 3. TJÄNSTER */}
         <Services />
 
-        {/* 4. How we work */}
-        <HowWeWork />
+        {/* 4. OM NEXE SOLAR */}
+        <About />
 
-        {/* 5. Experience */}
-        <Experience />
-
-        {/* 6. Contact */}
+        {/* 5. CONTACT */}
         <Contact ref={contactRef} />
       </main>
 
-      {/* 7. Footer */}
+      {/* FOOTER */}
       <Footer />
     </div>
   );
