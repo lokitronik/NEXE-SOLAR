@@ -17,6 +17,16 @@ export const Services: React.FC = () => {
       title: 'FÖREBYGGANDE TJÄNSTER',
       description: 'BirdBlocker, fågelskydd, rengöring av solpaneler och andra förebyggande åtgärder.',
     },
+    {
+      id: '04',
+      title: 'HETA ARBETEN – PAPP',
+      description: 'Vi är utbildade och certifierade för Heta Arbeten och utför solcellsinstallationer på papptak med rätt säkerhet och arbetsmetodik.',
+    },
+    {
+      id: '05',
+      title: 'DEMONTERING & AVVECKLING',
+      description: 'Vi demonterar och avlägsnar befintliga solcellsanläggningar på ett säkert och professionellt sätt, exempelvis vid takrenovering, byte av tak eller ersättning av befintlig anläggning.',
+    },
   ];
 
   return (
@@ -42,8 +52,8 @@ export const Services: React.FC = () => {
           </h2>
         </div>
 
-        {/* 3 Service Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">
+        {/* Service Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">
           {services.map((service) => (
             <article
               key={service.id}
