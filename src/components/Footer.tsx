@@ -1,32 +1,159 @@
 import React from 'react';
 import { Logo } from './Logo';
+import { ExternalLink } from 'lucide-react';
 
 export const Footer: React.FC = () => {
+  const navLinks = [
+    { label: 'Tjänster', href: '#tjanster' },
+    { label: 'För företag', href: '#installationspartner' },
+    { label: 'Kapacitet', href: '#kapacitet' },
+    { label: 'Kontakt', href: '#kontakt' },
+  ];
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    const elem = document.querySelector(href);
+    if (elem) {
+      elem.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <footer
-      id="main-footer"
-      className="bg-white py-12 sm:py-16 text-center border-t border-slate-100"
+      id="site-footer"
+      className="bg-[#001D33] text-slate-300 py-10 sm:py-12 border-t border-white/10"
+      aria-label="Webbplatsens sidfot"
       style={{
-        paddingBottom: 'calc(3rem + env(safe-area-inset-bottom, 0px))',
+        paddingBottom: 'calc(2.5rem + env(safe-area-inset-bottom, 0px))',
       }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center space-y-4">
-        
-        <div>
-          <Logo variant="dark" size="lg" showSubtext={true} />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-10 pb-8 border-b border-white/10 items-start">
+          
+          {/* Column 1: Brand & Description */}
+          <div className="md:col-span-5 flex flex-col items-start">
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className="focus:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-xs mb-3 block"
+              aria-label="NEXE SOLAR Startsida"
+            >
+              <Logo variant="light" size="sm" />
+            </a>
+            <p className="text-xs sm:text-sm text-slate-400 max-w-sm leading-relaxed mb-3">
+              Professionell installationspartner för solcellsanläggningar, DC-kablage, service, underhåll, certifierade Heta Arbeten och demontering i hela Sverige.
+            </p>
+            <div className="text-xs text-slate-400">
+              <a
+                href="https://lokitronik.github.io/NEXE-GROUP-AB/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 text-slate-300 hover:text-white transition-colors underline decoration-slate-600 underline-offset-2"
+              >
+                <span>NEXE SOLAR · En del av NEXE GROUP AB</span>
+                <ExternalLink className="w-3 h-3 text-slate-400" aria-hidden="true" />
+              </a>
+            </div>
+          </div>
+
+          {/* Column 2: Navigation */}
+          <div className="md:col-span-3">
+            <h4 className="text-xs font-bold uppercase tracking-widest text-white mb-3 font-mono">
+              Navigation
+            </h4>
+            <ul className="space-y-2">
+              {navLinks.map((item) => (
+                <li key={item.label}>
+                  <a
+                    href={item.href}
+                    onClick={(e) => handleNavClick(e, item.href)}
+                    className="text-xs sm:text-sm text-slate-300 hover:text-white transition-colors block py-0.5"
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Column 3: NEXE GROUP */}
+          <div className="md:col-span-4">
+            <h4 className="text-xs font-bold uppercase tracking-widest text-white mb-3 font-mono">
+              NEXE GROUP
+            </h4>
+            <ul className="space-y-2.5">
+              <li>
+                <a
+                  href="https://lokitronik.github.io/NEXE-GROUP-AB/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs sm:text-sm text-slate-200 hover:text-white group transition-colors"
+                >
+                  <span className="font-semibold text-white">NEXE GROUP AB</span>
+                  <span className="text-slate-400 group-hover:text-slate-200 text-xs">– Moderbolag</span>
+                  <ExternalLink className="w-3.5 h-3.5 text-slate-400 group-hover:text-white" aria-hidden="true" />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://lokitronik.github.io/NEXE-RIVNING/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs sm:text-sm text-slate-200 hover:text-white group transition-colors"
+                >
+                  <span className="font-semibold text-white">NEXE RIVNING</span>
+                  <span className="text-slate-400 group-hover:text-slate-200 text-xs">– Invändig rivning & demontering</span>
+                  <ExternalLink className="w-3.5 h-3.5 text-slate-400 group-hover:text-white" aria-hidden="true" />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://lokitronik.github.io/NEXE-SANERING/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs sm:text-sm text-slate-200 hover:text-white group transition-colors"
+                >
+                  <span className="font-semibold text-white">NEXE SPECIALSANERING</span>
+                  <span className="text-slate-400 group-hover:text-slate-200 text-xs">– Specialsanering & miljö</span>
+                  <ExternalLink className="w-3.5 h-3.5 text-slate-400 group-hover:text-white" aria-hidden="true" />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://lokitronik.github.io/NEXE-SOLAR/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs sm:text-sm text-slate-200 hover:text-white group transition-colors"
+                >
+                  <span className="font-semibold text-white">NEXE SOLAR</span>
+                  <span className="text-slate-400 group-hover:text-slate-200 text-xs">– Solcellsinstallationer</span>
+                  <ExternalLink className="w-3.5 h-3.5 text-slate-400 group-hover:text-white" aria-hidden="true" />
+                </a>
+              </li>
+            </ul>
+          </div>
+
         </div>
 
-        <p className="text-xs sm:text-sm font-mono text-slate-700 font-medium">
-          En del av NEXE GROUP AB
-        </p>
-
-        <p className="text-xs font-mono text-slate-500">
-          Sverige • Professionell Solcellsinstallation
-        </p>
-
-        <div className="pt-3 border-t border-slate-200 w-36 mx-auto">
-          <p className="text-[11px] font-mono text-slate-400">
-            © {new Date().getFullYear()} NEXE GROUP AB
+        {/* Bottom copyright row */}
+        <div className="pt-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-400">
+          <p>
+            © {new Date().getFullYear()} NEXE SOLAR. En del av{' '}
+            <a
+              href="https://lokitronik.github.io/NEXE-GROUP-AB/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-slate-300 hover:text-white underline decoration-slate-600 underline-offset-2"
+            >
+              NEXE GROUP AB
+            </a>
+            . Alla rättigheter förbehållna.
+          </p>
+          <p className="text-slate-400 hidden sm:block">
+            Professionell solcellsinstallation för företag och entreprenörer.
           </p>
         </div>
 

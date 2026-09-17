@@ -10,6 +10,7 @@ interface LogoProps {
 }
 
 export const Logo: React.FC<LogoProps> = ({
+  variant = 'dark',
   size = 'md',
   className = '',
 }) => {
@@ -21,12 +22,16 @@ export const Logo: React.FC<LogoProps> = ({
     xl: 'h-24 sm:h-28 max-h-28',
   };
 
+  const isLight = variant === 'light';
+
   return (
     <div className={`inline-flex items-center select-none ${className}`}>
       <img
         src={logoSolar}
         alt="NEXE SOLAR"
-        className={`w-auto ${heightMap[size]} object-contain block transition-transform duration-200`}
+        className={`w-auto ${heightMap[size]} object-contain block transition-transform duration-200 ${
+          isLight ? 'brightness-0 invert opacity-95' : ''
+        }`}
         loading="eager"
         decoding="sync"
       />
