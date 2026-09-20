@@ -121,18 +121,6 @@ export const Footer: React.FC = () => {
                   <ExternalLink className="w-3.5 h-3.5 text-slate-400 group-hover:text-white" aria-hidden="true" />
                 </a>
               </li>
-              <li>
-                <a
-                  href="https://lokitronik.github.io/NEXE-SOLAR/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-xs sm:text-sm text-slate-200 hover:text-white group transition-colors"
-                >
-                  <span className="font-semibold text-white">NEXE SOLAR</span>
-                  <span className="text-slate-400 group-hover:text-slate-200 text-xs">– Solcellsinstallationer</span>
-                  <ExternalLink className="w-3.5 h-3.5 text-slate-400 group-hover:text-white" aria-hidden="true" />
-                </a>
-              </li>
             </ul>
           </div>
 
