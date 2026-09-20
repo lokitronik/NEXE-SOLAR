@@ -10,6 +10,7 @@ interface LogoProps {
 }
 
 export const Logo: React.FC<LogoProps> = ({
+  variant = 'dark',
   size = 'md',
   className = '',
 }) => {
@@ -20,10 +21,18 @@ export const Logo: React.FC<LogoProps> = ({
     xl: 'h-24 sm:h-28 max-h-28',
   };
 
+  const basePath = import.meta.env.BASE_URL || './';
+  const cleanBase = basePath.endsWith('/') ? basePath : `${basePath}/`;
+
+  const logoSrc =
+    variant === 'light'
+      ? `${cleanBase}logo-white.svg`
+      : logoSolar;
+
   return (
     <div className={`inline-flex items-center select-none ${className}`}>
       <img
-        src={logoSolar}
+        src={logoSrc}
         alt="NEXE SOLAR"
         className={`w-auto ${heightMap[size]} object-contain block transition-transform duration-200`}
         loading="eager"
