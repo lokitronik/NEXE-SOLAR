@@ -22,20 +22,56 @@ export const Contact = forwardRef<HTMLDivElement>((_, ref) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage('');
 
-    if (!formData.foretag.trim() || !formData.kontaktperson.trim() || !formData.epost.trim() || !formData.telefon.trim()) {
+    if (
+      !formData.foretag.trim() ||
+      !formData.kontaktperson.trim() ||
+      !formData.epost.trim() ||
+      !formData.telefon.trim()
+    ) {
       setErrorMessage('Vänligen fyll i företag, kontaktperson, e-post och telefon.');
       return;
     }
 
     setIsSubmitting(true);
-    setTimeout(() => {
+
+    try {
+      const formPayload = new FormData();
+      formPayload.append('foretag', formData.foretag.trim());
+      formPayload.append('kontaktperson', formData.kontaktperson.trim());
+      formPayload.append('email', formData.epost.trim());
+      formPayload.append('telefon', formData.telefon.trim());
+      formPayload.append('projektetsOrt', formData.projektetsOrt.trim());
+      formPayload.append('antalPaneler', formData.antalPaneler.trim());
+      formPayload.append('planeradStart', formData.planeradStart.trim());
+      formPayload.append('message', formData.meddelande.trim());
+      formPayload.append('_subject', 'Ny förfrågan – NEXE SOLAR');
+
+      const response = await fetch('https://formspree.io/f/xkjgrjkb', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+        },
+        body: formPayload,
+      });
+
+      if (response.ok) {
+        setIsSubmitted(true);
+      } else {
+        setErrorMessage(
+          'Förfrågan kunde inte skickas. Försök igen eller mejla direkt till kontakt@nexegroup.se.'
+        );
+      }
+    } catch {
+      setErrorMessage(
+        'Nätverksfel. Kontrollera din anslutning eller mejla kontakt@nexegroup.se.'
+      );
+    } finally {
       setIsSubmitting(false);
-      setIsSubmitted(true);
-    }, 500);
+    }
   };
 
   return (
@@ -46,7 +82,6 @@ export const Contact = forwardRef<HTMLDivElement>((_, ref) => {
       className="py-16 sm:py-24 lg:py-32 bg-white border-b border-slate-200 scroll-mt-20"
     >
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
-        
         {/* Header */}
         <div className="space-y-3 sm:space-y-4 mb-12 sm:mb-16 lg:mb-20">
           <div className="inline-flex items-center gap-2">
@@ -118,7 +153,6 @@ export const Contact = forwardRef<HTMLDivElement>((_, ref) => {
             noValidate
             className="bg-slate-50 border border-slate-200/90 p-6 sm:p-10 lg:p-14 rounded-xs space-y-6 sm:space-y-8 shadow-xs"
           >
-            
             {errorMessage && (
               <div
                 role="alert"
@@ -306,15 +340,11 @@ export const Contact = forwardRef<HTMLDivElement>((_, ref) => {
                 <Send className="w-4 h-4 text-slate-300" />
               </button>
             </div>
-
           </form>
         )}
-
       </div>
     </section>
   );
 });
 
 Contact.displayName = 'Contact';
-
-
