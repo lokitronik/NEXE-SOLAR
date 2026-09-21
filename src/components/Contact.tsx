@@ -1,5 +1,5 @@
 import React, { useState, forwardRef } from 'react';
-import { CheckCircle2, AlertCircle, Send } from 'lucide-react';
+import { CheckCircle2, AlertCircle, Send, Mail } from 'lucide-react';
 
 export const Contact = forwardRef<HTMLDivElement>((_, ref) => {
   const [formData, setFormData] = useState({
@@ -65,6 +65,17 @@ export const Contact = forwardRef<HTMLDivElement>((_, ref) => {
           <p className="text-base sm:text-xl lg:text-2xl text-slate-700 leading-relaxed font-normal pt-1">
             Berätta kort om projektet och vad ni behöver hjälp med. Vi återkopplar snabbt.
           </p>
+
+          <div className="pt-2 flex flex-wrap items-center gap-2 sm:gap-3 text-xs sm:text-sm font-mono text-slate-600">
+            <span>Föredrar ni direktkontakt? E-post:</span>
+            <a
+              href="mailto:kontakt@nexegroup.se"
+              className="text-[#002B49] font-bold hover:underline inline-flex items-center gap-1.5 bg-slate-100 px-3 py-1.5 rounded-xs border border-slate-200"
+            >
+              <Mail className="w-3.5 h-3.5 text-slate-500" />
+              kontakt@nexegroup.se
+            </a>
+          </div>
         </div>
 
         {/* Form Container */}

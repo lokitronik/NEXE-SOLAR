@@ -1,6 +1,6 @@
 import React from 'react';
 import { Logo } from './Logo';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, Mail } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   const navLinks = [
@@ -10,10 +10,7 @@ export const Footer: React.FC = () => {
     { label: 'Kontakt', href: '#kontakt' },
   ];
 
-  const handleNavClick = (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    href: string
-  ) => {
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     const elem = document.querySelector(href);
     if (elem) {
@@ -32,8 +29,9 @@ export const Footer: React.FC = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-10 pb-8 border-b border-white/10 items-start">
-          {/* Brand & Description */}
-          <div className="md:col-span-8 flex flex-col items-start">
+          
+          {/* Column 1: Brand & Description */}
+          <div className="md:col-span-5 flex flex-col items-start">
             <a
               href="#"
               onClick={(e) => {
@@ -45,35 +43,27 @@ export const Footer: React.FC = () => {
             >
               <Logo variant="light" size="sm" />
             </a>
-
             <p className="text-xs sm:text-sm text-slate-400 max-w-sm leading-relaxed mb-3">
-              Professionell installationspartner för solcellsanläggningar,
-              DC-kablage, service, underhåll, certifierade Heta Arbeten och
-              demontering i hela Sverige.
+              Professionell installationspartner för solcellsanläggningar, DC-kablage, service, underhåll, certifierade Heta Arbeten och demontering i hela Sverige.
             </p>
-
             <div className="text-xs text-slate-400">
               <a
-                href="https://lokitronik.github.io/NEXE-GROUP-AB/"
+                href="https://nexegroup.se"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1 text-slate-300 hover:text-white transition-colors underline decoration-slate-600 underline-offset-2"
               >
                 <span>NEXE SOLAR · En del av NEXE GROUP AB</span>
-                <ExternalLink
-                  className="w-3 h-3 text-slate-400"
-                  aria-hidden="true"
-                />
+                <ExternalLink className="w-3 h-3 text-slate-400" aria-hidden="true" />
               </a>
             </div>
           </div>
 
-          {/* Navigation */}
-          <div className="md:col-span-4">
+          {/* Column 2: Navigation */}
+          <div className="md:col-span-3">
             <h4 className="text-xs font-bold uppercase tracking-widest text-white mb-3 font-mono">
               Navigation
             </h4>
-
             <ul className="space-y-2">
               {navLinks.map((item) => (
                 <li key={item.label}>
@@ -88,6 +78,40 @@ export const Footer: React.FC = () => {
               ))}
             </ul>
           </div>
+
+          {/* Column 3: NEXE GROUP & Kontakt */}
+          <div className="md:col-span-4">
+            <h4 className="text-xs font-bold uppercase tracking-widest text-white mb-3 font-mono">
+              NEXE GROUP
+            </h4>
+            <ul className="space-y-3">
+              <li>
+                <a
+                  href="https://nexegroup.se"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs sm:text-sm text-slate-200 hover:text-white group transition-colors"
+                >
+                  <span className="font-semibold text-white">NEXE GROUP AB</span>
+                  <span className="text-slate-400 group-hover:text-slate-200 text-xs">– nexegroup.se</span>
+                  <ExternalLink className="w-3.5 h-3.5 text-slate-400 group-hover:text-white" aria-hidden="true" />
+                </a>
+              </li>
+              <li className="pt-2 border-t border-white/10">
+                <span className="block text-[11px] font-mono text-slate-400 uppercase tracking-wider mb-1">
+                  E-post
+                </span>
+                <a
+                  href="mailto:kontakt@nexegroup.se"
+                  className="inline-flex items-center gap-2 text-xs sm:text-sm text-slate-200 hover:text-white transition-colors group"
+                >
+                  <Mail className="w-3.5 h-3.5 text-slate-400 group-hover:text-white" aria-hidden="true" />
+                  <span className="font-mono text-white">kontakt@nexegroup.se</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
         </div>
 
         {/* Bottom copyright row */}
@@ -95,7 +119,7 @@ export const Footer: React.FC = () => {
           <p>
             © {new Date().getFullYear()} NEXE SOLAR. En del av{' '}
             <a
-              href="https://lokitronik.github.io/NEXE-GROUP-AB/"
+              href="https://nexegroup.se"
               target="_blank"
               rel="noopener noreferrer"
               className="text-slate-300 hover:text-white underline decoration-slate-600 underline-offset-2"
@@ -104,12 +128,13 @@ export const Footer: React.FC = () => {
             </a>
             . Alla rättigheter förbehållna.
           </p>
-
           <p className="text-slate-400 hidden sm:block">
             Professionell solcellsinstallation för företag och entreprenörer.
           </p>
         </div>
+
       </div>
     </footer>
   );
 };
+
