@@ -43,8 +43,8 @@ const photos: ProcessPhoto[] = [
     id: 'panel',
     src: '/images/process/Panel.jpeg',
     alt: 'Färdigställd solcellsanläggning med svarta solpaneler installerade på taket',
-    widthClass: 'w-[88vw] max-w-[560px] sm:w-[480px] lg:w-[560px]',
-    aspectRatio: 'aspect-[4/3] sm:aspect-[16/10]',
+    widthClass: 'w-[78vw] max-w-[320px] sm:w-[320px] lg:w-[340px]',
+    aspectRatio: 'aspect-[3/4]',
   },
 ];
 
