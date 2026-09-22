@@ -111,10 +111,11 @@ export const Contact: React.FC = () => {
             <span>Föredrar ni direktkontakt? E-post:</span>
             <a
               href="mailto:kontakt@nexegroup.se"
-              className="text-[#002B49] font-bold hover:underline inline-flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 transition-colors px-3 py-1.5 rounded-xs border border-slate-200"
+              translate="no"
+              className="notranslate text-[#002B49] font-bold hover:underline inline-flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 transition-colors px-3 py-1.5 rounded-xs border border-slate-200"
             >
               <Mail className="w-3.5 h-3.5 text-slate-500" />
-              kontakt@nexegroup.se
+              <span translate="no" className="notranslate">kontakt@nexegroup.se</span>
             </a>
           </div>
         </motion.div>
@@ -174,7 +175,17 @@ export const Contact: React.FC = () => {
                 className="p-4 bg-red-50 border border-red-200 rounded-xs flex items-center gap-3 text-xs sm:text-sm text-red-700 font-medium"
               >
                 <AlertCircle className="w-5 h-5 shrink-0 text-red-600" />
-                <span>{errorMessage}</span>
+                <span>
+                  {errorMessage.includes('kontakt@nexegroup.se') ? (
+                    <>
+                      {errorMessage.split('kontakt@nexegroup.se')[0]}
+                      <span translate="no" className="notranslate font-semibold">kontakt@nexegroup.se</span>
+                      {errorMessage.split('kontakt@nexegroup.se')[1]}
+                    </>
+                  ) : (
+                    errorMessage
+                  )}
+                </span>
               </div>
             )}
 

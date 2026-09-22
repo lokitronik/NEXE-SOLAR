@@ -58,7 +58,8 @@ export const Footer: React.FC = () => {
                 href="https://nexegroup.se"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-slate-300 hover:text-white transition-colors underline decoration-slate-600 underline-offset-2"
+                translate="no"
+                className="notranslate inline-flex items-center gap-1 text-slate-300 hover:text-white transition-colors underline decoration-slate-600 underline-offset-2"
               >
                 <span>NEXE SOLAR · En del av NEXE GROUP AB</span>
                 <ExternalLink className="w-3 h-3 text-slate-400" aria-hidden="true" />
@@ -97,7 +98,8 @@ export const Footer: React.FC = () => {
                   href="https://nexegroup.se"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-xs sm:text-sm text-slate-200 hover:text-white group transition-colors"
+                  translate="no"
+                  className="notranslate inline-flex items-center gap-1.5 text-xs sm:text-sm text-slate-200 hover:text-white group transition-colors"
                 >
                   <span className="font-semibold text-white">NEXE GROUP AB</span>
                   <span className="text-slate-400 group-hover:text-slate-200 text-xs">– nexegroup.se</span>
@@ -110,10 +112,11 @@ export const Footer: React.FC = () => {
                 </span>
                 <a
                   href="mailto:kontakt@nexegroup.se"
-                  className="inline-flex items-center gap-2 text-xs sm:text-sm text-slate-200 hover:text-white transition-colors group"
+                  translate="no"
+                  className="notranslate inline-flex items-center gap-2 text-xs sm:text-sm text-slate-200 hover:text-white transition-colors group"
                 >
                   <Mail className="w-3.5 h-3.5 text-slate-400 group-hover:text-white" aria-hidden="true" />
-                  <span className="font-mono text-white">kontakt@nexegroup.se</span>
+                  <span translate="no" className="notranslate font-mono text-white">kontakt@nexegroup.se</span>
                 </a>
               </li>
             </ul>
