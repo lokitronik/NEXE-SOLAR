@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { ArrowRight, ChevronDown, Zap, ShieldCheck, MapPin } from 'lucide-react';
-import { motion } from 'motion/react';
+import { motion, useScroll, useTransform } from 'motion/react';
 import heroSolarImage from '../assets/images/rooftop_solar_panels_1788180941974.jpg';
 
 interface HeroProps {
@@ -9,14 +9,31 @@ interface HeroProps {
 }
 
 export const Hero: React.FC<HeroProps> = ({ onContactClick, onServicesClick }) => {
+  const heroRef = useRef<HTMLElement>(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  });
+
+  // Dynamic depth transforms as the user scrolls down past the hero
+  const contentScale = useTransform(scrollYProgress, [0, 1], [1, 0.94]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.85], [1, 0.25]);
+  const contentY = useTransform(scrollYProgress, [0, 1], [0, 60]);
+  const bgImageY = useTransform(scrollYProgress, [0, 1], [0, 90]);
+
   return (
     <section
+      ref={heroRef}
       id="hero"
       aria-label="Introduktion"
       className="relative pt-28 sm:pt-36 lg:pt-44 pb-20 sm:pb-28 lg:pb-36 bg-slate-900 border-b border-slate-200 overflow-hidden"
     >
-      {/* Background Solar Installation Image with gentle ambient zoom and contrast overlay */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
+      {/* Background Solar Installation Image with parallax and ambient zoom */}
+      <motion.div
+        style={{ y: bgImageY }}
+        className="absolute inset-0 z-0 overflow-hidden"
+      >
         <motion.img
           initial={{ scale: 1.08, opacity: 0.8 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -28,12 +45,15 @@ export const Hero: React.FC<HeroProps> = ({ onContactClick, onServicesClick }) =
           decoding="sync"
           referrerPolicy="no-referrer"
         />
-        {/* Cinematic dark gradient overlays for crystal-clear readability */}
+        {/* Cinematic dark gradient overlays for readability */}
         <div className="absolute inset-0 bg-slate-950/65 sm:bg-slate-950/60" />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/45 to-slate-950/75" />
-      </div>
+      </motion.div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <motion.div
+        style={{ scale: contentScale, opacity: contentOpacity, y: contentY }}
+        className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+      >
         <motion.div
           initial="hidden"
           animate="visible"
@@ -66,7 +86,7 @@ export const Hero: React.FC<HeroProps> = ({ onContactClick, onServicesClick }) =
             </span>
           </motion.div>
 
-          {/* Main Headline with responsive clamp */}
+          {/* Main Headline */}
           <motion.div
             variants={{
               hidden: { opacity: 0, y: 20 },
@@ -162,9 +182,7 @@ export const Hero: React.FC<HeroProps> = ({ onContactClick, onServicesClick }) =
           <ChevronDown className="w-4 h-4 text-white/70" />
         </motion.div>
 
-      </div>
+      </motion.div>
     </section>
   );
 };
-
-
