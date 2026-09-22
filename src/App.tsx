@@ -3,6 +3,7 @@ import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { InstallationPartner } from './components/InstallationPartner';
 import { Services } from './components/Services';
+import { ProcessGallery } from './components/ProcessGallery';
 import { About } from './components/About';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
@@ -40,10 +41,13 @@ export default function App() {
         {/* 3. TJÄNSTER */}
         <Services />
 
-        {/* 4. OM NEXE SOLAR / KAPACITET */}
+        {/* 4. MONTAGEPROCESS & RESULTAT */}
+        <ProcessGallery />
+
+        {/* 5. OM NEXE SOLAR / KAPACITET */}
         <About />
 
-        {/* 5. CONTACT */}
+        {/* 6. CONTACT */}
         <Contact ref={contactRef} />
       </main>
 
