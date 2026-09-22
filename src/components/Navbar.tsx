@@ -9,10 +9,16 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 15);
+      const winScroll = document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      if (height > 0) {
+        setScrollProgress((winScroll / height) * 100);
+      }
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
@@ -62,6 +68,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
           : 'calc(0.9rem + env(safe-area-inset-top, 0px))',
       }}
     >
+      {/* Dynamic Reading Progress Bar */}
+      <div
+        className="absolute bottom-0 left-0 h-[2.5px] bg-[#002B49] transition-all duration-150 ease-out z-50 pointer-events-none"
+        style={{ width: `${scrollProgress}%` }}
+        aria-hidden="true"
+      />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           
@@ -83,9 +96,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
                 key={link.name}
                 href={link.href}
                 id={`nav-link-${link.name.toLowerCase().replace(/\s+/g, '-')}`}
-                className="text-xs font-mono font-semibold tracking-widest text-slate-700 hover:text-[#002B49] transition-colors py-2"
+                className="group relative text-xs font-mono font-semibold tracking-widest text-slate-700 hover:text-[#002B49] transition-colors py-2"
               >
-                {link.name}
+                <span>{link.name}</span>
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#002B49] transition-all duration-200 group-hover:w-full" />
               </a>
             ))}
           </nav>
@@ -95,10 +109,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
             <button
               onClick={onContactClick}
               id="navbar-contact-cta"
-              className="inline-flex items-center gap-2 px-5 py-2.5 min-h-[44px] text-xs font-bold font-mono uppercase tracking-wider text-white bg-[#002B49] hover:bg-[#001D33] active:scale-[0.98] transition-all cursor-pointer rounded-xs"
+              className="group inline-flex items-center gap-2 px-5 py-2.5 min-h-[44px] text-xs font-bold font-mono uppercase tracking-wider text-white bg-[#002B49] hover:bg-[#001D33] active:scale-[0.98] transition-all cursor-pointer rounded-xs shadow-xs"
             >
               <span>KONTAKTA OSS</span>
-              <ArrowRight className="w-3.5 h-3.5 text-slate-300" />
+              <ArrowRight className="w-3.5 h-3.5 text-slate-300 transition-transform duration-200 group-hover:translate-x-1" />
             </button>
           </div>
 

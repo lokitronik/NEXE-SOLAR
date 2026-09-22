@@ -1,5 +1,6 @@
 import React, { useState, forwardRef } from 'react';
-import { CheckCircle2, AlertCircle, Send, Mail } from 'lucide-react';
+import { motion } from 'motion/react';
+import { CheckCircle2, AlertCircle, Send, Mail, Loader2 } from 'lucide-react';
 
 export const Contact = forwardRef<HTMLDivElement>((_, ref) => {
   const [formData, setFormData] = useState({
@@ -83,7 +84,13 @@ export const Contact = forwardRef<HTMLDivElement>((_, ref) => {
     >
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
         {/* Header */}
-        <div className="space-y-3 sm:space-y-4 mb-12 sm:mb-16 lg:mb-20">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="space-y-3 sm:space-y-4 mb-12 sm:mb-16 lg:mb-20"
+        >
           <div className="inline-flex items-center gap-2">
             <span className="text-[11px] sm:text-xs font-mono font-bold tracking-[0.2em] text-slate-500 uppercase">
               05 / PROJEKTFÖRFRÅGAN
@@ -105,17 +112,22 @@ export const Contact = forwardRef<HTMLDivElement>((_, ref) => {
             <span>Föredrar ni direktkontakt? E-post:</span>
             <a
               href="mailto:kontakt@nexegroup.se"
-              className="text-[#002B49] font-bold hover:underline inline-flex items-center gap-1.5 bg-slate-100 px-3 py-1.5 rounded-xs border border-slate-200"
+              className="text-[#002B49] font-bold hover:underline inline-flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 transition-colors px-3 py-1.5 rounded-xs border border-slate-200"
             >
               <Mail className="w-3.5 h-3.5 text-slate-500" />
               kontakt@nexegroup.se
             </a>
           </div>
-        </div>
+        </motion.div>
 
         {/* Form Container */}
         {isSubmitted ? (
-          <div className="p-8 sm:p-12 lg:p-16 bg-slate-50 border border-slate-200 rounded-xs text-center space-y-5">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+            className="p-8 sm:p-12 lg:p-16 bg-slate-50 border border-slate-200 rounded-xs text-center space-y-5"
+          >
             <div className="w-14 h-14 bg-emerald-100 text-emerald-800 rounded-full flex items-center justify-center mx-auto">
               <CheckCircle2 className="w-7 h-7" />
             </div>
@@ -146,9 +158,13 @@ export const Contact = forwardRef<HTMLDivElement>((_, ref) => {
                 Skicka en ny förfrågan
               </button>
             </div>
-          </div>
+          </motion.div>
         ) : (
-          <form
+          <motion.form
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ duration: 0.6, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
             onSubmit={handleSubmit}
             noValidate
             className="bg-slate-50 border border-slate-200/90 p-6 sm:p-10 lg:p-14 rounded-xs space-y-6 sm:space-y-8 shadow-xs"
@@ -334,13 +350,22 @@ export const Contact = forwardRef<HTMLDivElement>((_, ref) => {
                 type="submit"
                 id="contact-submit-button"
                 disabled={isSubmitting}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-3 min-h-[48px] sm:min-h-[52px] px-10 sm:px-12 py-3.5 sm:py-4 text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-white bg-[#002B49] hover:bg-[#001D33] active:scale-[0.98] transition-all rounded-xs cursor-pointer disabled:opacity-60 shadow-xs"
+                className="group w-full sm:w-auto inline-flex items-center justify-center gap-3 min-h-[48px] sm:min-h-[52px] px-10 sm:px-12 py-3.5 sm:py-4 text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-white bg-[#002B49] hover:bg-[#001D33] active:scale-[0.98] transition-all rounded-xs cursor-pointer disabled:opacity-60 shadow-xs"
               >
-                <span>{isSubmitting ? 'SKICKAR...' : 'SKICKA FÖRFRÅGAN'}</span>
-                <Send className="w-4 h-4 text-slate-300" />
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin text-slate-300" />
+                    <span>SKICKAR FÖRFRÅGAN...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>SKICKA FÖRFRÅGAN</span>
+                    <Send className="w-4 h-4 text-slate-300 transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-0.5" />
+                  </>
+                )}
               </button>
             </div>
-          </form>
+          </motion.form>
         )}
       </div>
     </section>

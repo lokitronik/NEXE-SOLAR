@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'motion/react';
 import { Logo } from './Logo';
 import { ExternalLink, Mail } from 'lucide-react';
 
@@ -21,13 +22,19 @@ export const Footer: React.FC = () => {
   return (
     <footer
       id="site-footer"
-      className="bg-[#001D33] text-slate-300 py-10 sm:py-12 border-t border-white/10"
+      className="bg-[#001D33] text-slate-300 py-10 sm:py-12 border-t border-white/10 overflow-hidden"
       aria-label="Webbplatsens sidfot"
       style={{
         paddingBottom: 'calc(2.5rem + env(safe-area-inset-bottom, 0px))',
       }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+      >
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-10 pb-8 border-b border-white/10 items-start">
           
           {/* Column 1: Brand & Description */}
@@ -133,7 +140,7 @@ export const Footer: React.FC = () => {
           </p>
         </div>
 
-      </div>
+      </motion.div>
     </footer>
   );
 };
