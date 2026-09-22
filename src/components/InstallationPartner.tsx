@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Layers, ShieldCheck, Zap, ArrowRight } from 'lucide-react';
+import { Layers, ShieldCheck, Zap } from 'lucide-react';
 
 export const InstallationPartner: React.FC = () => {
   const partnerHighlights = [
@@ -106,7 +106,7 @@ export const InstallationPartner: React.FC = () => {
           })}
         </motion.div>
 
-        {/* Strong Architectural B2B Statement with dynamic hover */}
+        {/* Strong Architectural B2B Statement */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -129,5 +129,3 @@ export const InstallationPartner: React.FC = () => {
     </section>
   );
 };
-
-

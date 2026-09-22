@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { InstallationPartner } from './components/InstallationPartner';
@@ -9,8 +9,6 @@ import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 
 export default function App() {
-  const contactRef = useRef<HTMLDivElement>(null);
-
   const scrollToContact = () => {
     const contactElem = document.getElementById('kontakt');
     if (contactElem) {
@@ -30,7 +28,7 @@ export default function App() {
       {/* Navigation */}
       <Navbar onContactClick={scrollToContact} />
 
-      {/* Main Single Page Content - ONLY 5 SECTIONS */}
+      {/* Main Single Page Content */}
       <main className="flex-1">
         {/* 1. HERO */}
         <Hero onContactClick={scrollToContact} onServicesClick={scrollToServices} />
@@ -48,7 +46,7 @@ export default function App() {
         <About />
 
         {/* 6. CONTACT */}
-        <Contact ref={contactRef} />
+        <Contact />
       </main>
 
       {/* FOOTER */}
@@ -56,4 +54,3 @@ export default function App() {
     </div>
   );
 }
-

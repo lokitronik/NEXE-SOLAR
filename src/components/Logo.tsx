@@ -1,12 +1,9 @@
 import React from 'react';
-import logoSolar from './logo-solar.png';
 
 interface LogoProps {
   variant?: 'light' | 'dark';
   size?: 'sm' | 'md' | 'lg' | 'xl';
   className?: string;
-  showSubtext?: boolean;
-  showIcon?: boolean;
 }
 
 export const Logo: React.FC<LogoProps> = ({
@@ -27,7 +24,7 @@ export const Logo: React.FC<LogoProps> = ({
   const logoSrc =
     variant === 'light'
       ? `${cleanBase}logo-white.svg`
-      : logoSolar;
+      : `${cleanBase}logo-solar.png`;
 
   return (
     <div className={`inline-flex items-center select-none ${className}`}>

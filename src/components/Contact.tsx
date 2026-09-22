@@ -1,8 +1,8 @@
-import React, { useState, forwardRef } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { CheckCircle2, AlertCircle, Send, Mail, Loader2 } from 'lucide-react';
 
-export const Contact = forwardRef<HTMLDivElement>((_, ref) => {
+export const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
     foretag: '',
     kontaktperson: '',
@@ -78,7 +78,6 @@ export const Contact = forwardRef<HTMLDivElement>((_, ref) => {
   return (
     <section
       id="kontakt"
-      ref={ref}
       aria-labelledby="contact-section-heading"
       className="py-16 sm:py-24 lg:py-32 bg-white border-b border-slate-200 scroll-mt-20"
     >
@@ -370,6 +369,4 @@ export const Contact = forwardRef<HTMLDivElement>((_, ref) => {
       </div>
     </section>
   );
-});
-
-Contact.displayName = 'Contact';
+};
