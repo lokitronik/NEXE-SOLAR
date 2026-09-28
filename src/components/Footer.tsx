@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { Logo } from './Logo';
-import { ExternalLink, Mail } from 'lucide-react';
+import { ExternalLink, Mail, Linkedin, Instagram } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   const navLinks = [
@@ -64,6 +64,36 @@ export const Footer: React.FC = () => {
                 <span>NEXE SOLAR · En del av NEXE GROUP AB</span>
                 <ExternalLink className="w-3 h-3 text-slate-400" aria-hidden="true" />
               </a>
+            </div>
+
+            {/* Social media channels */}
+            <div className="mt-5 pt-4 border-t border-white/10 flex items-center gap-3">
+              <span className="text-xs text-slate-400 font-medium">Följ oss:</span>
+              <div className="inline-flex items-center gap-1.5 ml-0.5">
+                <a
+                  href="https://www.linkedin.com/company/nexe-group-ab/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="notranslate inline-flex items-center justify-center p-2 rounded-full border border-slate-200/90 bg-slate-50/90 hover:bg-[#0A66C2]/15 hover:border-[#0A66C2]/50 text-slate-600 hover:text-[#0A66C2] transition-all duration-200 shadow-xs hover:shadow-sm hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                  translate="no"
+                  aria-label="Besök NEXE GROUP AB på LinkedIn"
+                  title="LinkedIn"
+                >
+                  <Linkedin className="w-4 h-4 shrink-0" aria-hidden="true" />
+                </a>
+
+                <a
+                  href="https://www.instagram.com/nexegroupab"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="notranslate inline-flex items-center justify-center p-2 rounded-full border border-slate-200/90 bg-slate-50/90 hover:bg-pink-500/15 hover:border-pink-500/50 text-slate-600 hover:text-pink-600 transition-all duration-200 shadow-xs hover:shadow-sm hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                  translate="no"
+                  aria-label="Besök NEXE GROUP AB på Instagram"
+                  title="Instagram"
+                >
+                  <Instagram className="w-4 h-4 shrink-0" aria-hidden="true" />
+                </a>
+              </div>
             </div>
           </div>
 
