@@ -22,7 +22,7 @@ const scope = [
   {
     title: 'Montagesystem, paneler och kablage på taket',
     description:
-      'Montering av skenor, montagesystem och solpaneler, inklusive förläggning och infästning av kablage på taket med metallband eller andra avsedda kabelfästen enligt systemets anvisningar.',
+      'Montering av skenor, montagesystem och solpaneler, inklusive förläggning och infästning av cablage på taket med metallband  enligt systemets anvisningar.',
   },
   {
     title: 'Kabelkanaler och kabeldragning till växelriktaren',
