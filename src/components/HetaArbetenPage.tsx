@@ -1,6 +1,5 @@
 import React, { useId, useState } from 'react';
 import {
-  ArrowLeft,
   ArrowRight,
   Check,
   ChevronDown,
@@ -8,7 +7,6 @@ import {
 } from 'lucide-react';
 
 interface HetaArbetenPageProps {
-  onBackToHome: () => void;
   onContactClick: () => void;
   bannerImageSrc?: string;
   projectImageSrc?: string;
@@ -82,7 +80,6 @@ const focus =
   'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500';
 
 export const HetaArbetenPage: React.FC<HetaArbetenPageProps> = ({
-  onBackToHome,
   onContactClick,
   bannerImageSrc = '/heta-arbeten.gif',
   projectImageSrc,
@@ -93,12 +90,11 @@ export const HetaArbetenPage: React.FC<HetaArbetenPageProps> = ({
 
   return (
     <div className="w-full bg-white text-slate-900 selection:bg-emerald-500 selection:text-white">
-      {/* Cabecera con imagen/GIF y compensación para navbar fija */}
+      {/* Cabecera con compensación de altura para la barra de navegación fija */}
       <section
         aria-labelledby="papptak-title"
-        className="relative isolate overflow-hidden bg-[#002B49] text-white pt-20 sm:pt-24 lg:pt-28 pb-16 sm:pb-20 lg:pb-28"
+        className="relative isolate overflow-hidden bg-[#002B49] text-white pt-24 pb-16 sm:pt-28 sm:pb-20 lg:pt-36 lg:pb-28"
       >
-        {/* Imagen de fondo */}
         <img
           src={bannerImageSrc}
           alt=""
@@ -106,7 +102,6 @@ export const HetaArbetenPage: React.FC<HetaArbetenPageProps> = ({
           className="absolute inset-0 h-full w-full object-cover object-center pointer-events-none"
         />
 
-        {/* Capas superpuestas para legibilidad en móvil y escritorio */}
         <div
           aria-hidden="true"
           className="absolute inset-0 bg-[#002B49]/85 sm:bg-[#002B49]/75 lg:bg-transparent"
@@ -117,23 +112,7 @@ export const HetaArbetenPage: React.FC<HetaArbetenPageProps> = ({
         />
 
         <div className={`${container} relative z-10`}>
-          {/* Botón Volver */}
-          <div className="mb-6 sm:mb-8">
-            <button
-              type="button"
-              onClick={onBackToHome}
-              className={`inline-flex items-center gap-2 text-sm font-medium text-emerald-200 transition-colors hover:text-white ${focus} rounded px-1.5 py-1 -ml-1.5`}
-            >
-              <ArrowLeft size={16} aria-hidden="true" />
-              <span>Tillbaka till start</span>
-            </button>
-          </div>
-
           <div className="max-w-3xl">
-            <p className={`${eyebrow} mb-3 sm:mb-4 text-emerald-300`}>
-              NEXE SOLAR / För solcells- och elinstallationsföretag
-            </p>
-
             <h1
               id="papptak-title"
               className="text-balance text-3xl font-semibold leading-tight tracking-tight sm:text-5xl lg:text-6xl"
@@ -360,8 +339,7 @@ export const HetaArbetenPage: React.FC<HetaArbetenPageProps> = ({
                     size={20}
                     className="mt-0.5 shrink-0 text-emerald-600"
                     aria-hidden="true"
-                  >
-                  </Check>
+                  />
                   <span>{item}</span>
                 </li>
               ))}
@@ -370,7 +348,7 @@ export const HetaArbetenPage: React.FC<HetaArbetenPageProps> = ({
         </div>
       </section>
 
-      {/* Preguntas frecuentes (Acordeón accesible y suave) */}
+      {/* Preguntas frecuentes */}
       <section
         aria-labelledby="faq-title"
         className="border-t border-slate-200 py-14 sm:py-20"
@@ -411,7 +389,6 @@ export const HetaArbetenPage: React.FC<HetaArbetenPageProps> = ({
                     </button>
                   </h3>
 
-                  {/* Panel con apertura animada con CSS Grid */}
                   <div
                     id={panelId}
                     role="region"
