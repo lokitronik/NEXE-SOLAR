@@ -13,7 +13,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateHetaArbeten, onNavigat
 
   const navLinks = [
     { label: 'Tjänster', href: '#tjanster', isHetaArbeten: false },
-    { label: 'Brandfarliga heta arbeten (Papp)', href: '#heta-arbeten-papp', isHetaArbeten: true },
+    { label: 'Heta arbeten (Papp)', href: '#heta-arbeten-papp', isHetaArbeten: true },
     { label: 'För företag', href: '#installationspartner', isHetaArbeten: false },
     { label: 'Kapacitet', href: '#kapacitet', isHetaArbeten: false },
     { label: 'Kontakt', href: '#kontakt', isHetaArbeten: false },
