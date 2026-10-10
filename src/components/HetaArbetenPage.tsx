@@ -121,14 +121,6 @@ export const HetaArbetenPage: React.FC<HetaArbetenPageProps> = ({
         <div
           className={`${container} relative z-10 py-12 sm:py-16 lg:py-20`}
         >
-          <button
-            type="button"
-            onClick={onBackToHome}
-            className={`mb-10 inline-flex items-center gap-2 rounded text-sm text-slate-200 transition-colors hover:text-white ${focus}`}
-          >
-            <ArrowLeft size={16} aria-hidden="true" />
-            Till startsidan
-          </button>
 
           <div className="max-w-3xl">
             <p className={`${eyebrow} mb-5 text-emerald-300`}>
