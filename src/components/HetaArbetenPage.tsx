@@ -23,32 +23,14 @@ const scope = [
       'Montage av infästningsplattor och tillhörande tätskiktsarbete enligt det valda systemets anvisningar.',
   },
   {
-    title: 'Montagesystem och paneler',
+    title: 'Montagesystem, paneler och kablage på taket',
     description:
-      'Montering av skenor, montagesystem och solpaneler enligt projektets ritningar och förutsättningar.',
+      'Montering av skenor, montagesystem och solpaneler, inklusive förläggning och infästning av kablage på taket med metallband eller andra avsedda kabelfästen enligt systemets anvisningar.',
   },
   {
-    title: 'Kabelvägar och kabelförläggning',
+    title: 'Kabelkanaler och kabeldragning till växelriktaren',
     description:
-      'Montage av kabelkanaler och förläggning av kablage fram till avtalad överlämningspunkt. Omfattningen fastställs inför projektet.',
-  },
-];
-
-const safetySteps = [
-  {
-    title: 'Planering och tillstånd',
-    description:
-      'Inför arbetet samordnar vi riskbedömning och tillstånd med beställarens utsedda tillståndsansvarige. Förutsättningarna kontrolleras på plats innan arbetet startar.',
-  },
-  {
-    title: 'Brandskydd under arbetet',
-    description:
-      'Vi ordnar erforderlig släckutrustning, skyddsåtgärder och brandvakt utifrån arbetsplatsens risker och gällande säkerhetsregler.',
-  },
-  {
-    title: 'Efterbevakning och kontroll',
-    description:
-      'Efter avslutat hett arbete genomförs efterbevakning i minst en timme, eller längre enligt tillståndet. Utfört montage kontrolleras och dokumenteras enligt överenskommelse.',
+      'Montering av kabelkanaler och kabeldragning från taket till växelriktaren eller avtalad överlämningspunkt. Omfattningen fastställs innan arbetet påbörjas.',
   },
 ];
 
