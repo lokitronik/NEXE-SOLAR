@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Zap, Wrench, ShieldCheck, Flame, RefreshCw, ArrowUpRight, ArrowRight, MessageSquare, ExternalLink } from 'lucide-react';
+import { Zap, Wrench, ShieldCheck, Flame, RefreshCw, ArrowUpRight, ArrowRight, MessageSquare } from 'lucide-react';
 
 interface ServicesProps {
   onNavigateHetaArbeten?: () => void;
@@ -125,16 +125,14 @@ export const Services: React.FC<ServicesProps> = ({ onNavigateHetaArbeten }) => 
                       </span>
                     </div>
 
-                    {isHetaArbeten ? (
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-xs bg-amber-400/20 text-amber-900 border border-amber-300 font-bold tracking-tight">
-                        EGEN SIDA
-                      </span>
-                    ) : (
-                      <ArrowUpRight
-                        className="w-4 h-4 text-slate-300 group-hover:text-[#002B49] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200"
-                        aria-hidden="true"
-                      />
-                    )}
+                    <ArrowUpRight
+                      className={`w-4 h-4 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 ${
+                        isHetaArbeten
+                          ? 'text-amber-500/80 group-hover:text-amber-600'
+                          : 'text-slate-300 group-hover:text-[#002B49]'
+                      }`}
+                      aria-hidden="true"
+                    />
                   </div>
 
                   <h3 className="text-base sm:text-lg lg:text-xl font-extrabold text-[#002B49] font-heading tracking-tight mb-3 sm:mb-4 leading-snug group-hover:text-[#001D33] transition-colors">
@@ -154,7 +152,7 @@ export const Services: React.FC<ServicesProps> = ({ onNavigateHetaArbeten }) => 
                       }}
                       className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-amber-900 hover:text-amber-950 bg-amber-400/25 hover:bg-amber-400/40 border border-amber-400/50 px-3 py-2 rounded-xs transition-colors cursor-pointer w-full justify-between mt-2"
                     >
-                      <span>ÖPPNA SPECIALISTSIDA FÖR PAPPTAK</span>
+                      <span>LÄS MER OM PAPPTAK & HETA ARBETEN</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </button>
                   )}
@@ -227,5 +225,3 @@ export const Services: React.FC<ServicesProps> = ({ onNavigateHetaArbeten }) => 
     </section>
   );
 };
-
-
