@@ -1,12 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { Logo } from './Logo';
-import { ArrowRight, Menu, X, PhoneCall } from 'lucide-react';
+import { ArrowRight, Menu, X, PhoneCall, Flame } from 'lucide-react';
 
 interface NavbarProps {
   onContactClick: () => void;
+  currentPage?: 'home' | 'heta-arbeten';
+  onNavigateHome?: () => void;
+  onNavigateHetaArbeten?: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
+export const Navbar: React.FC<NavbarProps> = ({
+  onContactClick,
+  currentPage = 'home',
+  onNavigateHome,
+  onNavigateHetaArbeten,
+}) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -47,11 +55,51 @@ export const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [mobileMenuOpen]);
 
+  const handleNavLinkClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+    isHetaArbeten: boolean
+  ) => {
+    e.preventDefault();
+    setMobileMenuOpen(false);
+
+    if (isHetaArbeten) {
+      if (onNavigateHetaArbeten) {
+        onNavigateHetaArbeten();
+      } else {
+        window.location.hash = 'heta-arbeten-papp';
+      }
+      return;
+    }
+
+    if (currentPage !== 'home' && onNavigateHome) {
+      onNavigateHome();
+      setTimeout(() => {
+        const target = document.querySelector(href);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 50);
+      return;
+    }
+
+    const target = document.querySelector(href);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   const navLinks = [
-    { name: 'TJÄNSTER', href: '#tjanster' },
-    { name: 'FÖR FÖRETAG', href: '#installationspartner' },
-    { name: 'KAPACITET', href: '#kapacitet' },
-    { name: 'KONTAKT', href: '#kontakt' },
+    { name: 'TJÄNSTER', href: '#tjanster', isHetaArbeten: false },
+    {
+      name: 'HETA ARBETEN (PAPP)',
+      href: '#heta-arbeten-papp',
+      isHetaArbeten: true,
+      badge: 'CERTIFIERAD',
+    },
+    { name: 'FÖR FÖRETAG', href: '#installationspartner', isHetaArbeten: false },
+    { name: 'KAPACITET', href: '#kapacitet', isHetaArbeten: false },
+    { name: 'KONTAKT', href: '#kontakt', isHetaArbeten: false },
   ];
 
   return (
@@ -82,26 +130,59 @@ export const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
           <a
             href="#hero"
             id="nav-brand-logo"
-            className="flex items-center focus:outline-none py-0.5"
+            className="flex items-center focus:outline-none py-0.5 cursor-pointer"
             aria-label="NEXE SOLAR startsida"
-            onClick={() => setMobileMenuOpen(false)}
+            onClick={(e) => {
+              e.preventDefault();
+              setMobileMenuOpen(false);
+              if (onNavigateHome) {
+                onNavigateHome();
+              }
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
           >
             <Logo variant="dark" size="md" className="hover:opacity-90 transition-opacity" />
           </a>
 
           {/* Desktop / Tablet Nav Items */}
-          <nav className="hidden lg:flex items-center gap-8 xl:gap-10" aria-label="Huvudmeny">
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                id={`nav-link-${link.name.toLowerCase().replace(/\s+/g, '-')}`}
-                className="group relative text-xs font-mono font-semibold tracking-widest text-slate-700 hover:text-[#002B49] transition-colors py-2"
-              >
-                <span>{link.name}</span>
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#002B49] transition-all duration-200 group-hover:w-full" />
-              </a>
-            ))}
+          <nav className="hidden lg:flex items-center gap-7 xl:gap-8" aria-label="Huvudmeny">
+            {navLinks.map((link) => {
+              const isActive = link.isHetaArbeten && currentPage === 'heta-arbeten';
+              return (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={(e) => handleNavLinkClick(e, link.href, link.isHetaArbeten)}
+                  id={`nav-link-${link.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
+                  className={`group relative text-xs font-mono font-semibold tracking-wider transition-colors py-2 flex items-center gap-1.5 cursor-pointer ${
+                    isActive
+                      ? 'text-[#002B49] font-bold'
+                      : link.isHetaArbeten
+                      ? 'text-amber-700 hover:text-amber-900'
+                      : 'text-slate-700 hover:text-[#002B49]'
+                  }`}
+                >
+                  {link.isHetaArbeten && (
+                    <Flame className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+                  )}
+                  <span>{link.name}</span>
+                  {link.badge && (
+                    <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded-xs bg-amber-100 text-amber-800 border border-amber-200 uppercase tracking-tight">
+                      {link.badge}
+                    </span>
+                  )}
+                  <span
+                    className={`absolute bottom-0 left-0 h-0.5 transition-all duration-200 ${
+                      isActive
+                        ? 'w-full bg-[#002B49]'
+                        : link.isHetaArbeten
+                        ? 'w-0 bg-amber-500 group-hover:w-full'
+                        : 'w-0 bg-[#002B49] group-hover:w-full'
+                    }`}
+                  />
+                </a>
+              );
+            })}
           </nav>
 
           {/* Desktop CTA Action */}
@@ -161,10 +242,22 @@ export const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
                 <a
                   key={link.name}
                   href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-between text-xs sm:text-sm font-mono font-bold tracking-widest text-slate-800 hover:text-[#002B49] hover:bg-slate-50 active:bg-slate-100 py-3.5 px-3 rounded-xs border-b border-slate-100 transition-colors"
+                  onClick={(e) => handleNavLinkClick(e, link.href, link.isHetaArbeten)}
+                  className={`flex items-center justify-between text-xs sm:text-sm font-mono font-bold tracking-wider py-3.5 px-3 rounded-xs border-b border-slate-100 transition-colors ${
+                    link.isHetaArbeten
+                      ? 'bg-amber-50/70 text-amber-900'
+                      : 'text-slate-800 hover:text-[#002B49] hover:bg-slate-50'
+                  }`}
                 >
-                  <span>{link.name}</span>
+                  <span className="flex items-center gap-2">
+                    {link.isHetaArbeten && <Flame className="w-4 h-4 text-amber-500" />}
+                    <span>{link.name}</span>
+                    {link.badge && (
+                      <span className="text-[9px] px-1.5 py-0.5 bg-amber-200 text-amber-900 rounded-xs">
+                        {link.badge}
+                      </span>
+                    )}
+                  </span>
                   <ArrowRight className="w-4 h-4 text-slate-400" />
                 </a>
               ))}

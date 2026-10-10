@@ -1,8 +1,12 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Zap, Wrench, ShieldCheck, Flame, RefreshCw, ArrowUpRight, ArrowRight, MessageSquare } from 'lucide-react';
+import { Zap, Wrench, ShieldCheck, Flame, RefreshCw, ArrowUpRight, ArrowRight, MessageSquare, ExternalLink } from 'lucide-react';
 
-export const Services: React.FC = () => {
+interface ServicesProps {
+  onNavigateHetaArbeten?: () => void;
+}
+
+export const Services: React.FC<ServicesProps> = ({ onNavigateHetaArbeten }) => {
   const services = [
     {
       id: '01',
@@ -24,9 +28,10 @@ export const Services: React.FC = () => {
     },
     {
       id: '04',
-      title: 'HETA ARBETEN – PAPP',
-      description: 'Vi är utbildade och certifierade för Heta Arbeten och utför solcellsinstallationer på papptak med rätt säkerhet och arbetsmetodik.',
+      title: 'BRANDFARLIGA HETA ARBETEN – PAPP',
+      description: 'Vi är utbildade och innehar certifikat för Brandfarliga heta arbeten. Vi utför solcellsinstallationer på papptak med rätt säkerhet, behörighet och arbetsmetodik.',
       icon: Flame,
+      isHetaArbeten: true,
     },
     {
       id: '05',
@@ -88,6 +93,7 @@ export const Services: React.FC = () => {
         >
           {services.map((service) => {
             const Icon = service.icon;
+            const isHetaArbeten = Boolean((service as any).isHetaArbeten);
             return (
               <motion.article
                 key={service.id}
@@ -96,35 +102,75 @@ export const Services: React.FC = () => {
                   visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
                 }}
                 whileHover={{ y: -6 }}
-                className="group relative bg-slate-50 border border-slate-200/90 hover:border-[#002B49] hover:bg-white p-6 sm:p-8 lg:p-10 rounded-xs flex flex-col justify-between transition-all duration-300 min-h-[280px] sm:min-h-[330px] shadow-2xs hover:shadow-xl cursor-default"
+                className={`group relative p-6 sm:p-8 lg:p-10 rounded-xs flex flex-col justify-between transition-all duration-300 min-h-[280px] sm:min-h-[330px] shadow-2xs hover:shadow-xl cursor-default ${
+                  isHetaArbeten
+                    ? 'bg-amber-50/40 border-2 border-amber-400/60 hover:border-amber-500 hover:bg-white'
+                    : 'bg-slate-50 border border-slate-200/90 hover:border-[#002B49] hover:bg-white'
+                }`}
               >
                 <div>
                   <div className="flex items-center justify-between pb-4 sm:pb-5 mb-5 sm:mb-7 border-b border-slate-200">
                     <div className="flex items-center gap-2.5">
-                      <div className="w-8 h-8 rounded-xs bg-slate-200/70 text-[#002B49] group-hover:bg-[#002B49] group-hover:text-white flex items-center justify-center transition-colors duration-300">
+                      <div
+                        className={`w-8 h-8 rounded-xs flex items-center justify-center transition-colors duration-300 ${
+                          isHetaArbeten
+                            ? 'bg-amber-500 text-slate-950 font-bold'
+                            : 'bg-slate-200/70 text-[#002B49] group-hover:bg-[#002B49] group-hover:text-white'
+                        }`}
+                      >
                         <Icon className="w-4 h-4" />
                       </div>
                       <span className="text-xs font-mono font-bold text-[#002B49] tracking-widest">
                         {service.id}
                       </span>
                     </div>
-                    <ArrowUpRight className="w-4 h-4 text-slate-300 group-hover:text-[#002B49] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200" aria-hidden="true" />
+
+                    {isHetaArbeten ? (
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-xs bg-amber-400/20 text-amber-900 border border-amber-300 font-bold tracking-tight">
+                        EGEN SIDA
+                      </span>
+                    ) : (
+                      <ArrowUpRight
+                        className="w-4 h-4 text-slate-300 group-hover:text-[#002B49] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200"
+                        aria-hidden="true"
+                      />
+                    )}
                   </div>
 
                   <h3 className="text-base sm:text-lg lg:text-xl font-extrabold text-[#002B49] font-heading tracking-tight mb-3 sm:mb-4 leading-snug group-hover:text-[#001D33] transition-colors">
                     {service.title}
                   </h3>
 
-                  <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
+                  <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal mb-4">
                     {service.description}
                   </p>
+
+                  {isHetaArbeten && onNavigateHetaArbeten && (
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onNavigateHetaArbeten();
+                      }}
+                      className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-amber-900 hover:text-amber-950 bg-amber-400/25 hover:bg-amber-400/40 border border-amber-400/50 px-3 py-2 rounded-xs transition-colors cursor-pointer w-full justify-between mt-2"
+                    >
+                      <span>ÖPPNA SPECIALISTSIDA FÖR PAPPTAK</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
+                  )}
                 </div>
 
                 <div className="pt-4 sm:pt-6 mt-4 sm:mt-6 border-t border-slate-200/60 flex items-center justify-between">
                   <span className="text-[10px] sm:text-[11px] font-mono uppercase tracking-widest text-slate-500 font-medium">
-                    NEXE FÄLTTEAM
+                    {isHetaArbeten ? 'CERTIFIERADE MONTÖRSTEAM' : 'NEXE FÄLTTEAM'}
                   </span>
-                  <span className="w-1.5 h-1.5 rounded-full bg-slate-300 group-hover:bg-emerald-500 transition-colors" />
+                  <span
+                    className={`w-1.5 h-1.5 rounded-full transition-colors ${
+                      isHetaArbeten
+                        ? 'bg-amber-500'
+                        : 'bg-slate-300 group-hover:bg-emerald-500'
+                    }`}
+                  />
                 </div>
               </motion.article>
             );

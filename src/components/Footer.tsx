@@ -1,25 +1,53 @@
 import React from 'react';
-import { ExternalLink, ArrowUp, Linkedin, Instagram } from 'lucide-react';
+import { ExternalLink, ArrowUp, Linkedin, Instagram, Flame } from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
 import { Logo } from './Logo';
 
-export const Footer: React.FC = () => {
+interface FooterProps {
+  onNavigateHetaArbeten?: () => void;
+  onNavigateHome?: () => void;
+}
+
+export const Footer: React.FC<FooterProps> = ({ onNavigateHetaArbeten, onNavigateHome }) => {
   const shouldReduceMotion = useReducedMotion();
 
   const navLinks = [
-    { label: 'Tjänster', href: '#tjanster' },
-    { label: 'För företag', href: '#installationspartner' },
-    { label: 'Kapacitet', href: '#kapacitet' },
-    { label: 'Kontakt', href: '#kontakt' },
+    { label: 'Tjänster', href: '#tjanster', isHetaArbeten: false },
+    { label: 'Brandfarliga heta arbeten (Papp)', href: '#heta-arbeten-papp', isHetaArbeten: true },
+    { label: 'För företag', href: '#installationspartner', isHetaArbeten: false },
+    { label: 'Kapacitet', href: '#kapacitet', isHetaArbeten: false },
+    { label: 'Kontakt', href: '#kontakt', isHetaArbeten: false },
   ];
 
   const handleNavClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
-    href: string
+    link: { label: string; href: string; isHetaArbeten?: boolean }
   ) => {
     e.preventDefault();
-    const target = document.querySelector(href);
 
+    if (link.isHetaArbeten) {
+      if (onNavigateHetaArbeten) {
+        onNavigateHetaArbeten();
+      } else {
+        window.location.hash = 'heta-arbeten-papp';
+      }
+      return;
+    }
+
+    if (onNavigateHome) {
+      onNavigateHome();
+      setTimeout(() => {
+        const target = document.querySelector(link.href);
+        if (target) {
+          target.scrollIntoView({
+            behavior: shouldReduceMotion ? 'auto' : 'smooth',
+          });
+        }
+      }, 50);
+      return;
+    }
+
+    const target = document.querySelector(link.href);
     if (target) {
       target.scrollIntoView({
         behavior: shouldReduceMotion ? 'auto' : 'smooth',
@@ -86,10 +114,15 @@ export const Footer: React.FC = () => {
               <a
                 key={link.label}
                 href={link.href}
-                onClick={(e) => handleNavClick(e, link.href)}
-                className="text-slate-300 hover:text-white transition-colors"
+                onClick={(e) => handleNavClick(e, link)}
+                className={`transition-colors inline-flex items-center gap-1 ${
+                  link.isHetaArbeten
+                    ? 'text-amber-400 hover:text-amber-300 font-semibold'
+                    : 'text-slate-300 hover:text-white'
+                }`}
               >
-                {link.label}
+                {link.isHetaArbeten && <Flame className="w-3.5 h-3.5 text-amber-400" />}
+                <span>{link.label}</span>
               </a>
             ))}
           </nav>

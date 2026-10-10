@@ -157,7 +157,7 @@ export const Hero: React.FC<HeroProps> = ({ onContactClick, onServicesClick }) =
             <div className="flex items-center gap-2.5 bg-slate-900/40 backdrop-blur-xs px-3.5 py-2.5 rounded-xs border border-white/10 hover:border-white/25 transition-colors">
               <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
               <span className="text-xs font-mono font-semibold tracking-wide text-slate-200">
-                Certifierade Heta Arbeten
+                Brandfarliga heta arbeten
               </span>
             </div>
             <div className="flex items-center gap-2.5 bg-slate-900/40 backdrop-blur-xs px-3.5 py-2.5 rounded-xs border border-white/10 hover:border-white/25 transition-colors">

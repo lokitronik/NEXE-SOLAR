@@ -17,7 +17,7 @@ export const InstallationPartner: React.FC = () => {
     {
       icon: ShieldCheck,
       title: 'Kvalitet & Säkerhet',
-      desc: 'Utbildade montörer med certifiering för Heta Arbeten och noggrann egenkontroll.',
+      desc: 'Utbildade montörer med certifikat för Brandfarliga heta arbeten och noggrann egenkontroll.',
     },
   ];
 
