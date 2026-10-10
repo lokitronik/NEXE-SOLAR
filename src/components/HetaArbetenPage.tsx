@@ -5,7 +5,6 @@ import {
   Check,
   ChevronDown,
   Flame,
-  Mail,
 } from 'lucide-react';
 
 interface HetaArbetenPageProps {
@@ -31,6 +30,24 @@ const scope = [
     title: 'Kabelkanaler och kabeldragning till växelriktaren',
     description:
       'Montering av kabelkanaler och kabeldragning från taket till växelriktaren eller avtalad överlämningspunkt. Omfattningen fastställs innan arbetet påbörjas.',
+  },
+];
+
+const safetySteps = [
+  {
+    title: 'Före arbetet',
+    description:
+      'Riskbedömning genomförs på plats och tillstånd för brandfarliga heta arbeten utfärdas och signeras enligt SBF 506 innan arbetet påbörjas.',
+  },
+  {
+    title: 'Under arbetet',
+    description:
+      'Skyddsåtgärder vidtas, godkänd släckutrustning finns direkt till hands och erforderlig bevakning upprätthålls under hela arbetsmomentet.',
+  },
+  {
+    title: 'Efter arbetet',
+    description:
+      'Efterbevakning genomförs enligt tillståndet. Utfört montage kontrolleras och dokumenteras enligt överenskommelse.',
   },
 ];
 
