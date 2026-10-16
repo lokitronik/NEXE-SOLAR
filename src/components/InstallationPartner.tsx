@@ -95,14 +95,15 @@ export const InstallationPartner: React.FC<InstallationPartnerProps> = ({
                 <motion.li
                   key={item.title}
                   variants={cardVariants}
-                  className="rounded-xs border border-slate-200 bg-white p-6 shadow-2xs sm:p-7"
+                  whileHover={{ y: -4 }}
+                  className="group rounded-xs border border-slate-200 bg-white p-6 shadow-2xs transition-all duration-300 hover:border-[#002B49]/40 hover:shadow-md sm:p-7"
                 >
                   <div className="mb-4 flex items-center justify-between">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xs bg-slate-100 text-[#002B49]">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xs bg-slate-100 text-[#002B49] transition-colors duration-300 group-hover:bg-[#002B49] group-hover:text-white">
                       <Icon className="h-5 w-5" aria-hidden="true" />
                     </div>
                     <span
-                      className="font-mono text-[11px] font-bold text-slate-400"
+                      className="font-mono text-[11px] font-bold text-slate-400 transition-colors group-hover:text-[#002B49]"
                       aria-hidden="true"
                     >
                       0{idx + 1}
@@ -125,7 +126,8 @@ export const InstallationPartner: React.FC<InstallationPartnerProps> = ({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="rounded-xs border border-l-4 border-slate-200/90 border-l-[#002B49] bg-white p-6 shadow-xs sm:border-l-8 sm:p-12 lg:p-16"
+            whileHover={{ scale: 1.005 }}
+            className="rounded-xs border border-l-4 border-slate-200/90 border-l-[#002B49] bg-white p-6 shadow-xs transition-shadow duration-300 hover:shadow-md sm:border-l-8 sm:p-12 lg:p-16"
           >
             <div className="max-w-4xl space-y-2 sm:space-y-3">
               <span className="block font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 sm:text-xs sm:tracking-[0.25em]">

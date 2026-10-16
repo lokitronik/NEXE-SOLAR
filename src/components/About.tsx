@@ -119,10 +119,11 @@ export const About: React.FC<AboutProps> = ({ onContactClick }) => {
                 <motion.li
                   key={item.title}
                   variants={itemVariants}
-                  className="flex items-start gap-3.5 rounded-xs border border-slate-200 bg-white p-5 shadow-2xs sm:gap-4 sm:p-6"
+                  whileHover={{ y: -4 }}
+                  className="group flex items-start gap-3.5 rounded-xs border border-slate-200 bg-white p-5 shadow-2xs transition-all duration-300 hover:border-[#002B49] hover:shadow-md sm:gap-4 sm:p-6"
                 >
                   <div
-                    className="mt-0.5 shrink-0 rounded-xs bg-slate-100 p-1.5 text-[#002B49]"
+                    className="mt-0.5 shrink-0 rounded-xs bg-slate-100 p-1.5 text-[#002B49] transition-colors duration-200 group-hover:bg-[#002B49] group-hover:text-white"
                     aria-hidden="true"
                   >
                     <Check className="h-4 w-4" />
@@ -170,11 +171,12 @@ export const About: React.FC<AboutProps> = ({ onContactClick }) => {
                   <motion.li
                     key={stepItem.step}
                     variants={itemVariants}
-                    className="relative rounded-xs border border-slate-200 bg-white p-5 sm:p-6"
+                    whileHover={{ y: -4 }}
+                    className="group relative rounded-xs border border-slate-200 bg-white p-5 transition-all duration-300 hover:border-[#002B49]/50 hover:shadow-md sm:p-6"
                   >
                     <div className="mb-4 flex items-center justify-between">
                       <div
-                        className="flex h-9 w-9 items-center justify-center rounded-xs bg-slate-100 text-[#002B49]"
+                        className="flex h-9 w-9 items-center justify-center rounded-xs bg-slate-100 text-[#002B49] transition-colors duration-200 group-hover:bg-[#002B49] group-hover:text-white"
                         aria-hidden="true"
                       >
                         <StepIcon className="h-[18px] w-[18px]" />

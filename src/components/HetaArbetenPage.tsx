@@ -1,5 +1,6 @@
 import React, { useId, useState } from 'react';
 import { ArrowRight, Check, ChevronDown, Flame } from 'lucide-react';
+import { CountUp, RevealText } from './AnimatedSection';
 
 interface HetaArbetenPageProps {
   onContactClick: () => void;
@@ -10,10 +11,15 @@ interface HetaArbetenPageProps {
 
 /* ---------------------------------- Datos --------------------------------- */
 
-const stats = [
-  { value: '2 000+', label: 'paneler på papptak' },
-  { value: 'SBF 506', label: 'certifierade heta arbeten' },
-  { value: '9 m', label: 'ställningsutbildning' },
+const stats: {
+  to?: number;
+  suffix?: string;
+  text?: string;
+  label: string;
+}[] = [
+  { to: 2000, suffix: '+', label: 'paneler på papptak' },
+  { text: 'SBF 506', label: 'certifierade heta arbeten' },
+  { to: 9, suffix: ' m', label: 'ställningsutbildning' },
 ];
 
 const scope = [
@@ -195,12 +201,12 @@ export const HetaArbetenPage: React.FC<HetaArbetenPageProps> = ({
               Underentreprenör · Solceller på papptak
             </p>
 
-            <h1
+            <RevealText
+              as="h1"
               id="papptak-title"
               className="text-balance text-3xl font-semibold leading-tight tracking-tight sm:text-5xl lg:text-6xl"
-            >
-              Montageteamet för era solcellsprojekt på papptak
-            </h1>
+              text="Montageteamet för era solcellsprojekt på papptak"
+            />
 
             <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate-100 sm:mt-6 sm:text-lg">
               Från infästningar och tätskikt till paneler och kabelförläggning. Vi har certifierade heta arbeten, ställningsutbildning och erfarenhet från projekt med över 2 000 paneler, så att ni kan lägga tiden på nästa projekt.
@@ -233,7 +239,11 @@ export const HetaArbetenPage: React.FC<HetaArbetenPageProps> = ({
                   <dt className="sr-only">{stat.label}</dt>
                   <dd>
                     <span className="block text-2xl font-semibold tracking-tight sm:text-3xl">
-                      {stat.value}
+                      {stat.to !== undefined ? (
+                        <CountUp to={stat.to} suffix={stat.suffix} />
+                      ) : (
+                        stat.text
+                      )}
                     </span>
                     <span className="mt-1 block text-xs leading-snug text-slate-300 sm:text-sm">
                       {stat.label}

@@ -153,19 +153,20 @@ export const Services: React.FC<ServicesProps> = ({
                   <motion.li
                     key={service.title}
                     variants={cardVariants}
-                    className={`${bigCard} shadow-2xs ${
+                    whileHover={{ y: -6 }}
+                    className={`group ${bigCard} shadow-2xs transition-all duration-300 hover:bg-white hover:shadow-xl ${
                       hl
-                        ? 'border-2 border-amber-400/60 bg-amber-50/40'
-                        : 'border border-slate-200/90 bg-slate-50'
+                        ? 'border-2 border-amber-400/60 bg-amber-50/40 hover:border-amber-500'
+                        : 'border border-slate-200/90 bg-slate-50 hover:border-[#002B49]'
                     }`}
                   >
                     <div>
                       <div className="mb-5 flex items-center gap-2.5 border-b border-slate-200 pb-4 sm:mb-7 sm:pb-5">
                         <div
-                          className={`flex h-8 w-8 items-center justify-center rounded-xs ${
+                          className={`flex h-8 w-8 items-center justify-center rounded-xs transition-colors duration-300 ${
                             hl
                               ? 'bg-amber-500 text-slate-950'
-                              : 'bg-slate-200/70 text-[#002B49]'
+                              : 'bg-slate-200/70 text-[#002B49] group-hover:bg-[#002B49] group-hover:text-white'
                           }`}
                           aria-hidden="true"
                         >
@@ -211,7 +212,8 @@ export const Services: React.FC<ServicesProps> = ({
               {/* Kontaktkort */}
               <motion.li
                 variants={cardVariants}
-                className={`${bigCard} border border-[#001D33] bg-[#002B49] text-white shadow-md md:col-span-2 lg:col-span-1`}
+                whileHover={{ y: -6 }}
+                className={`${bigCard} border border-[#001D33] bg-[#002B49] text-white shadow-md transition-all duration-300 hover:shadow-2xl md:col-span-2 lg:col-span-1`}
               >
                 <div>
                   <div className="mb-5 flex items-center gap-2.5 border-b border-white/15 pb-4 sm:mb-7 sm:pb-5">
@@ -277,10 +279,11 @@ export const Services: React.FC<ServicesProps> = ({
                   <motion.li
                     key={service.title}
                     variants={cardVariants}
-                    className="rounded-xs border border-slate-200 bg-slate-50 p-5 sm:p-6"
+                    whileHover={{ y: -4 }}
+                    className="group rounded-xs border border-slate-200 bg-slate-50 p-5 transition-all duration-300 hover:border-[#002B49]/50 hover:bg-white hover:shadow-md sm:p-6"
                   >
                     <div
-                      className="mb-4 flex h-8 w-8 items-center justify-center rounded-xs bg-slate-200/70 text-[#002B49]"
+                      className="mb-4 flex h-8 w-8 items-center justify-center rounded-xs bg-slate-200/70 text-[#002B49] transition-colors duration-300 group-hover:bg-[#002B49] group-hover:text-white"
                       aria-hidden="true"
                     >
                       <Icon className="h-4 w-4" />
