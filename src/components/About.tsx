@@ -1,5 +1,13 @@
-import React from 'react';
-import { motion, MotionConfig } from 'motion/react';
+import React, { useRef, useState } from 'react';
+import {
+  motion,
+  MotionConfig,
+  useMotionValueEvent,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  type MotionValue,
+} from 'motion/react';
 import {
   ArrowRight,
   Check,
@@ -7,6 +15,7 @@ import {
   ClipboardCheck,
   ShieldCheck,
   Users,
+  type LucideIcon,
 } from 'lucide-react';
 
 interface AboutProps {
@@ -28,7 +37,12 @@ const capacityItems = [
   },
 ];
 
-const workflowSteps = [
+const workflowSteps: {
+  step: string;
+  title: string;
+  desc: string;
+  icon: LucideIcon;
+}[] = [
   {
     step: '01',
     title: 'Projektavstämning',
@@ -71,6 +85,106 @@ const itemVariants = {
 
 const focus =
   'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#002B49]';
+
+/* ------------------------------ Tidslinje ---------------------------------- */
+
+interface TimelineStepProps {
+  item: (typeof workflowSteps)[number];
+  progress: MotionValue<number>;
+  threshold: number;
+  forceActive: boolean;
+}
+
+const TimelineStep: React.FC<TimelineStepProps> = ({
+  item,
+  progress,
+  threshold,
+  forceActive,
+}) => {
+  const [reached, setReached] = useState(forceActive);
+  const StepIcon = item.icon;
+
+  useMotionValueEvent(progress, 'change', (v) => {
+    setReached(v >= threshold);
+  });
+
+  const active = forceActive || reached;
+
+  return (
+    <li className="relative pb-12 last:pb-0 sm:pb-16">
+      <div
+        aria-hidden="true"
+        className={`absolute -left-14 top-0 flex h-10 w-10 items-center justify-center rounded-full border-2 transition-colors duration-500 sm:-left-20 sm:h-14 sm:w-14 ${
+          active
+            ? 'border-[#002B49] bg-[#002B49] text-white'
+            : 'border-slate-300 bg-white text-slate-400'
+        }`}
+      >
+        <StepIcon className="h-4 w-4 sm:h-5 sm:w-5" />
+      </div>
+
+      <div
+        className={`transition-opacity duration-500 ${
+          active ? 'opacity-100' : 'opacity-45'
+        }`}
+      >
+        <span className="font-mono text-xs font-bold tracking-widest text-slate-500">
+          STEG {item.step}
+        </span>
+        <h4 className="mt-1 font-heading text-xl font-semibold tracking-tight text-[#002B49] sm:text-2xl">
+          {item.title}
+        </h4>
+        <p className="mt-2 max-w-xl text-sm leading-relaxed text-slate-600 sm:text-base">
+          {item.desc}
+        </p>
+      </div>
+    </li>
+  );
+};
+
+const Timeline: React.FC = () => {
+  const ref = useRef<HTMLOListElement>(null);
+  const reduce = useReducedMotion();
+
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start 65%', 'end 55%'],
+  });
+  const smooth = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
+
+  const last = workflowSteps.length - 1;
+
+  return (
+    <ol ref={ref} className="relative max-w-3xl pl-14 sm:pl-20">
+      {/* Linje: grå bana + fylld del som följer scrollen */}
+      <div
+        aria-hidden="true"
+        className="absolute bottom-0 left-[19px] top-0 w-0.5 bg-slate-200 sm:left-[27px]"
+      >
+        <motion.div
+          style={{ scaleY: reduce ? 1 : smooth, transformOrigin: 'top' }}
+          className="h-full w-full bg-[#002B49]"
+        />
+      </div>
+
+      {workflowSteps.map((item, index) => (
+        <TimelineStep
+          key={item.step}
+          item={item}
+          progress={smooth}
+          threshold={index / last - 0.02}
+          forceActive={Boolean(reduce)}
+        />
+      ))}
+    </ol>
+  );
+};
+
+/* --------------------------------- Sida ----------------------------------- */
 
 export const About: React.FC<AboutProps> = ({ onContactClick }) => {
   return (
@@ -141,15 +255,9 @@ export const About: React.FC<AboutProps> = ({ onContactClick }) => {
             </motion.ul>
           </div>
 
-          {/* Arbetsmetodik */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="mt-12 border-t border-slate-200 pt-8 sm:mt-16 sm:pt-12 lg:mt-20"
-          >
-            <div className="mb-6 sm:mb-8">
+          {/* Arbetsmetodik: tidslinje som fylls när man scrollar */}
+          <div className="mt-12 border-t border-slate-200 pt-8 sm:mt-16 sm:pt-12 lg:mt-20">
+            <div className="mb-8 sm:mb-12">
               <span className="mb-1 block font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 sm:text-xs">
                 Arbetsmetodik
               </span>
@@ -158,56 +266,10 @@ export const About: React.FC<AboutProps> = ({ onContactClick }) => {
               </h3>
             </div>
 
-            <motion.ol
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: '-50px' }}
-              variants={gridVariants(0.12)}
-              className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4"
-            >
-              {workflowSteps.map((stepItem, index) => {
-                const StepIcon = stepItem.icon;
-                return (
-                  <motion.li
-                    key={stepItem.step}
-                    variants={itemVariants}
-                    whileHover={{ y: -4 }}
-                    className="group relative rounded-xs border border-slate-200 bg-white p-5 transition-all duration-300 hover:border-[#002B49]/50 hover:shadow-md sm:p-6"
-                  >
-                    <div className="mb-4 flex items-center justify-between">
-                      <div
-                        className="flex h-9 w-9 items-center justify-center rounded-xs bg-slate-100 text-[#002B49] transition-colors duration-200 group-hover:bg-[#002B49] group-hover:text-white"
-                        aria-hidden="true"
-                      >
-                        <StepIcon className="h-[18px] w-[18px]" />
-                      </div>
-                      <span className="font-mono text-xs font-bold text-slate-400">
-                        STEG {stepItem.step}
-                      </span>
-                    </div>
-
-                    <h4 className="mb-2 font-heading text-sm font-bold tracking-tight text-[#002B49] sm:text-base">
-                      {stepItem.title}
-                    </h4>
-                    <p className="text-xs leading-relaxed text-slate-600">
-                      {stepItem.desc}
-                    </p>
-
-                    {index < workflowSteps.length - 1 && (
-                      <div
-                        className="pointer-events-none absolute -right-3 top-1/2 z-10 hidden -translate-y-1/2 text-slate-300 lg:block"
-                        aria-hidden="true"
-                      >
-                        <ArrowRight className="h-4 w-4" />
-                      </div>
-                    )}
-                  </motion.li>
-                );
-              })}
-            </motion.ol>
+            <Timeline />
 
             {onContactClick && (
-              <div className="mt-8 sm:mt-10">
+              <div className="mt-10 sm:mt-14">
                 <button
                   type="button"
                   onClick={onContactClick}
@@ -218,7 +280,7 @@ export const About: React.FC<AboutProps> = ({ onContactClick }) => {
                 </button>
               </div>
             )}
-          </motion.div>
+          </div>
         </div>
       </section>
     </MotionConfig>
