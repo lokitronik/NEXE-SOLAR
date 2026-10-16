@@ -1,63 +1,109 @@
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform, useSpring } from 'motion/react';
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from 'motion/react';
+
+type Direction = 'zoom-in-out' | 'subtle-depth' | 'hero-recede';
 
 interface AnimatedSectionProps {
   children: React.ReactNode;
+  /** Obs: sektionerna har redan egna id (scroll-mt-20). Skicka inte samma id hit, annars blir det dubbletter. */
   id?: string;
+  /** Klasser för det animerade innehållet */
   className?: string;
-  direction?: 'zoom-in-out' | 'subtle-depth' | 'hero-recede';
+  /**
+   * Bakgrund/kantlinjer som ska stå still medan innehållet animeras.
+   * Flytta sektionens bg-klass hit för att undvika synliga "sömmar" mellan sektioner.
+   */
+  backgroundClassName?: string;
+  direction?: Direction;
 }
+
+interface Config {
+  entryScale: [number, number];
+  entryOpacity: [number, number];
+  exitScale: [number, number];
+  exitOpacity: [number, number];
+}
+
+const CONFIG: Record<Direction, Config> = {
+  'zoom-in-out': {
+    entryScale: [0.96, 1],
+    entryOpacity: [0.6, 1],
+    exitScale: [1, 0.97],
+    exitOpacity: [1, 0.7],
+  },
+  'subtle-depth': {
+    entryScale: [0.98, 1],
+    entryOpacity: [0.8, 1],
+    exitScale: [1, 0.99],
+    exitOpacity: [1, 0.85],
+  },
+  // Första sektionen: ingen intoning, tonar bara tillbaka när man scrollar vidare
+  'hero-recede': {
+    entryScale: [1, 1],
+    entryOpacity: [1, 1],
+    exitScale: [1, 0.95],
+    exitOpacity: [1, 0.5],
+  },
+};
 
 export const AnimatedSection: React.FC<AnimatedSectionProps> = ({
   children,
   id,
   className = '',
+  backgroundClassName = '',
   direction = 'zoom-in-out',
 }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
+  const prefersReducedMotion = useReducedMotion();
+  const cfg = CONFIG[direction];
+  const isHero = direction === 'hero-recede';
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start end', 'end start'],
+  // Intoning: 0 när sektionens topp når skärmens nederkant, 1 när den når toppen.
+  // Sektionen är alltså alltid i vila (scale 1) när man landar på ett ankare,
+  // oavsett hur hög sektionen är.
+  const { scrollYProgress: entry } = useScroll({
+    target: ref,
+    offset: ['start end', 'start start'],
   });
 
-  // Smooth out scroll progress with a gentle spring to prevent jitter
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 120,
-    damping: 24,
-    mass: 0.2,
+  // Uttoning: börjar först när sektionens underkant lämnar skärmen.
+  const { scrollYProgress: exit } = useScroll({
+    target: ref,
+    offset: isHero ? ['start start', 'end start'] : ['end end', 'end start'],
   });
 
-  // Zoom-in as section approaches center, subtle zoom-out as it leaves
+  const entryScale = useTransform(entry, [0, 1], cfg.entryScale);
+  const exitScale = useTransform(exit, [0, 1], cfg.exitScale);
+  const entryOpacity = useTransform(entry, [0, 1], cfg.entryOpacity);
+  const exitOpacity = useTransform(exit, [0, 1], cfg.exitOpacity);
+
   const scale = useTransform(
-    smoothProgress,
-    [0, 0.28, 0.72, 1],
-    direction === 'subtle-depth'
-      ? [0.96, 1, 1, 0.98]
-      : [0.93, 1, 1, 0.95]
+    [entryScale, exitScale],
+    ([a, b]: number[]) => a * b
   );
-
   const opacity = useTransform(
-    smoothProgress,
-    [0, 0.18, 0.82, 1],
-    [0.75, 1, 1, 0.75]
+    [entryOpacity, exitOpacity],
+    ([a, b]: number[]) => a * b
   );
 
-  const y = useTransform(
-    smoothProgress,
-    [0, 0.28, 0.72, 1],
-    [32, 0, 0, -24]
-  );
+  // Respekterar "minska rörelser" i operativsystemet
+  if (prefersReducedMotion) {
+    return (
+      <div id={id} className={backgroundClassName}>
+        <div className={`w-full ${className}`}>{children}</div>
+      </div>
+    );
+  }
 
   return (
-    <div ref={containerRef} id={id} className="relative">
+    <div ref={ref} id={id} className={`relative ${backgroundClassName}`}>
       <motion.div
-        style={{
-          scale,
-          opacity,
-          y,
-          transformOrigin: '50% 50%',
-        }}
+        style={{ scale, opacity, willChange: 'transform, opacity' }}
         className={`w-full ${className}`}
       >
         {children}

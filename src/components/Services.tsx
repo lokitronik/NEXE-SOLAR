@@ -1,227 +1,303 @@
 import React from 'react';
-import { motion } from 'motion/react';
-import { Zap, Wrench, ShieldCheck, Flame, RefreshCw, ArrowUpRight, ArrowRight, MessageSquare } from 'lucide-react';
+import { motion, MotionConfig } from 'motion/react';
+import {
+  ArrowRight,
+  Flame,
+  MessageSquare,
+  RefreshCw,
+  ShieldCheck,
+  Wrench,
+  Zap,
+  type LucideIcon,
+} from 'lucide-react';
 
 interface ServicesProps {
   onNavigateHetaArbeten?: () => void;
+  /** Om ingen anges scrollar knappen till elementet med id="kontakt" */
+  onContactClick?: () => void;
 }
 
-export const Services: React.FC<ServicesProps> = ({ onNavigateHetaArbeten }) => {
-  const services = [
-    {
-      id: '01',
-      title: 'SOLCELLSINSTALLATION & DC-KABLAGE',
-      description: 'Komplett mekaniskt montage av solpaneler samt dragning och anslutning av DC-kablage på tak för bostäder, BRF och kommersiella fastigheter.',
-      icon: Zap,
-    },
-    {
-      id: '02',
-      title: 'UNDERHÅLL & SERVICE',
-      description: 'Underhåll, kontroll, felsökning och service av befintliga solcellsanläggningar för optimal driftsäkerhet och produktion.',
-      icon: Wrench,
-    },
-    {
-      id: '03',
-      title: 'FÖREBYGGANDE TJÄNSTER',
-      description: 'BirdBlocker, fågelskydd, rengöring av solpaneler och andra förebyggande åtgärder som skyddar anläggningen över tid.',
-      icon: ShieldCheck,
-    },
-    {
-      id: '04',
-      title: 'BRANDFARLIGA HETA ARBETEN – PAPP',
-      description: 'Vi är utbildade och innehar certifikat för Brandfarliga heta arbeten. Vi utför solcellsinstallationer på papptak med rätt säkerhet, behörighet och arbetsmetodik.',
-      icon: Flame,
-      isHetaArbeten: true,
-    },
-    {
-      id: '05',
-      title: 'DEMONTERING & AVVECKLING',
-      description: 'Vi demonterar och avlägsnar befintliga solcellsanläggningar på ett säkert och professionellt sätt, exempelvis vid takrenovering eller byte.',
-      icon: RefreshCw,
-    },
-  ];
+interface Service {
+  title: string;
+  description: string;
+  icon: LucideIcon;
+  /** Visuellt framhävt kort (papptak / heta arbeten) */
+  highlight?: boolean;
+}
 
-  const handleContactScroll = () => {
-    const contactElem = document.getElementById('kontakt');
-    if (contactElem) {
-      contactElem.scrollIntoView({ behavior: 'smooth' });
+// Huvudspår: montage åt installatörer och entreprenörer (underentreprenad)
+const installationServices: Service[] = [
+  {
+    title: 'Solcellsinstallation & DC-kablage',
+    description:
+      'Komplett mekaniskt montage av solpaneler samt dragning och förläggning av DC-kablage på tak i bostads-, BRF- och kommersiella projekt.',
+    icon: Zap,
+  },
+  {
+    title: 'Papptak: infästningar & tätskikt',
+    description:
+      'Montage av solceller på papptak, inklusive infästningar och tillhörande tätskiktsarbete. Våra montörer som utför brandfarliga heta arbeten har giltiga personcertifikat och vi arbetar enligt SBF 506.',
+    icon: Flame,
+    highlight: true,
+  },
+];
+
+// Sidospår: tjänster för ägare av befintliga anläggningar
+const ownerServices: Service[] = [
+  {
+    title: 'Underhåll & service',
+    description:
+      'Underhåll, kontroll, felsökning och service av befintliga solcellsanläggningar för optimal driftsäkerhet och produktion.',
+    icon: Wrench,
+  },
+  {
+    title: 'Förebyggande tjänster',
+    description:
+      'BirdBlocker, fågelskydd, rengöring av solpaneler och andra förebyggande åtgärder som skyddar anläggningen över tid.',
+    icon: ShieldCheck,
+  },
+  {
+    title: 'Demontering & avveckling',
+    description:
+      'Vi demonterar och avlägsnar befintliga solcellsanläggningar på ett säkert och professionellt sätt, exempelvis vid takrenovering eller byte.',
+    icon: RefreshCw,
+  },
+];
+
+const gridVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 25 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] as const },
+  },
+};
+
+const viewport = { once: true, margin: '-50px' } as const;
+
+const bigCard =
+  'relative flex min-h-[280px] flex-col justify-between rounded-xs p-6 sm:min-h-[330px] sm:p-8 lg:p-10';
+
+const focusDark =
+  'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#002B49]';
+const focusLight =
+  'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white';
+
+export const Services: React.FC<ServicesProps> = ({
+  onNavigateHetaArbeten,
+  onContactClick,
+}) => {
+  const handleContact = () => {
+    if (onContactClick) {
+      onContactClick();
+      return;
     }
+    const prefersReduced = window.matchMedia?.(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+    document
+      .getElementById('kontakt')
+      ?.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth' });
   };
 
   return (
-    <section
-      id="tjanster"
-      aria-labelledby="services-section-heading"
-      className="py-16 sm:py-24 lg:py-32 bg-white border-b border-slate-200 scroll-mt-20 overflow-hidden"
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
-        
-        {/* Headline */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-10 sm:mb-16 lg:mb-20"
-        >
-          <div className="inline-flex items-center gap-2 mb-3">
-            <span className="text-[11px] sm:text-xs font-mono font-bold tracking-[0.2em] text-slate-500 uppercase">
-              03 / VÅRT ERBJUDANDE
-            </span>
-          </div>
-          <h2
-            id="services-section-heading"
-            className="text-2xl xs:text-3xl sm:text-5xl lg:text-6xl font-extrabold text-[#002B49] tracking-tight font-heading break-words"
+    <MotionConfig reducedMotion="user">
+      <section
+        id="tjanster"
+        aria-labelledby="services-section-heading"
+        className="scroll-mt-20 overflow-hidden border-b border-slate-200 bg-white py-16 sm:py-24 lg:py-32"
+      >
+        <div className="mx-auto max-w-7xl px-4 text-left sm:px-6 lg:px-8">
+          {/* Rubrik */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={viewport}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="mb-10 sm:mb-14"
           >
-            TJÄNSTER
-          </h2>
-        </motion.div>
+            <span className="mb-3 block font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-slate-500 sm:text-xs">
+              03 / Vårt erbjudande
+            </span>
+            <h2
+              id="services-section-heading"
+              className="text-balance font-heading text-3xl font-semibold leading-[1.1] tracking-tight text-[#002B49] sm:text-5xl lg:text-6xl"
+            >
+              Det här utför vi
+            </h2>
+          </motion.div>
 
-        {/* Service Cards Grid with Staggered Motion */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-50px' }}
-          variants={{
-            hidden: { opacity: 0 },
-            visible: {
-              opacity: 1,
-              transition: { staggerChildren: 0.1 },
-            },
-          }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8"
-        >
-          {services.map((service) => {
-            const Icon = service.icon;
-            const isHetaArbeten = Boolean((service as any).isHetaArbeten);
-            return (
-              <motion.article
-                key={service.id}
-                variants={{
-                  hidden: { opacity: 0, y: 25 },
-                  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
-                }}
-                whileHover={{ y: -6 }}
-                className={`group relative p-6 sm:p-8 lg:p-10 rounded-xs flex flex-col justify-between transition-all duration-300 min-h-[280px] sm:min-h-[330px] shadow-2xs hover:shadow-xl cursor-default ${
-                  isHetaArbeten
-                    ? 'bg-amber-50/40 border-2 border-amber-400/60 hover:border-amber-500 hover:bg-white'
-                    : 'bg-slate-50 border border-slate-200/90 hover:border-[#002B49] hover:bg-white'
-                }`}
-              >
-                <div>
-                  <div className="flex items-center justify-between pb-4 sm:pb-5 mb-5 sm:mb-7 border-b border-slate-200">
-                    <div className="flex items-center gap-2.5">
-                      <div
-                        className={`w-8 h-8 rounded-xs flex items-center justify-center transition-colors duration-300 ${
-                          isHetaArbeten
-                            ? 'bg-amber-500 text-slate-950 font-bold'
-                            : 'bg-slate-200/70 text-[#002B49] group-hover:bg-[#002B49] group-hover:text-white'
-                        }`}
-                      >
-                        <Icon className="w-4 h-4" />
+          {/* Huvudspår: montage åt installatörer och entreprenörer */}
+          <div>
+            <h3 className="mb-5 font-heading text-xl font-semibold tracking-tight text-[#002B49] sm:mb-6 sm:text-2xl">
+              Montage åt installatörer och entreprenörer
+            </h3>
+
+            <motion.ul
+              initial="hidden"
+              whileInView="visible"
+              viewport={viewport}
+              variants={gridVariants}
+              className="grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8"
+            >
+              {installationServices.map((service, index) => {
+                const Icon = service.icon;
+                const hl = Boolean(service.highlight);
+
+                return (
+                  <motion.li
+                    key={service.title}
+                    variants={cardVariants}
+                    className={`${bigCard} shadow-2xs ${
+                      hl
+                        ? 'border-2 border-amber-400/60 bg-amber-50/40'
+                        : 'border border-slate-200/90 bg-slate-50'
+                    }`}
+                  >
+                    <div>
+                      <div className="mb-5 flex items-center gap-2.5 border-b border-slate-200 pb-4 sm:mb-7 sm:pb-5">
+                        <div
+                          className={`flex h-8 w-8 items-center justify-center rounded-xs ${
+                            hl
+                              ? 'bg-amber-500 text-slate-950'
+                              : 'bg-slate-200/70 text-[#002B49]'
+                          }`}
+                          aria-hidden="true"
+                        >
+                          <Icon className="h-4 w-4" />
+                        </div>
+                        <span className="font-mono text-xs font-bold tracking-widest text-[#002B49]">
+                          {String(index + 1).padStart(2, '0')}
+                        </span>
                       </div>
-                      <span className="text-xs font-mono font-bold text-[#002B49] tracking-widest">
-                        {service.id}
-                      </span>
+
+                      <h4 className="mb-3 font-heading text-lg font-bold leading-snug tracking-tight text-[#002B49] sm:mb-4 lg:text-xl">
+                        {service.title}
+                      </h4>
+
+                      <p className="mb-4 text-sm font-normal leading-relaxed text-slate-600 sm:text-base">
+                        {service.description}
+                      </p>
+
+                      {hl && onNavigateHetaArbeten && (
+                        <button
+                          type="button"
+                          onClick={onNavigateHetaArbeten}
+                          className={`mt-2 inline-flex w-full items-center justify-between gap-1.5 rounded-xs border border-amber-400/50 bg-amber-400/25 px-3 py-2 font-mono text-xs font-bold text-amber-900 transition-colors hover:bg-amber-400/40 hover:text-amber-950 ${focusDark}`}
+                        >
+                          <span>LÄS MER OM PAPPTAK & HETA ARBETEN</span>
+                          <ArrowRight
+                            className="h-3.5 w-3.5"
+                            aria-hidden="true"
+                          />
+                        </button>
+                      )}
                     </div>
 
-                    <ArrowUpRight
-                      className={`w-4 h-4 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 ${
-                        isHetaArbeten
-                          ? 'text-amber-500/80 group-hover:text-amber-600'
-                          : 'text-slate-300 group-hover:text-[#002B49]'
-                      }`}
+                    <div className="mt-4 border-t border-slate-200/60 pt-4 sm:mt-6 sm:pt-6">
+                      <span className="font-mono text-[10px] font-medium uppercase tracking-widest text-slate-500 sm:text-[11px]">
+                        {hl ? 'Certifierade montörer' : 'NEXE fältteam'}
+                      </span>
+                    </div>
+                  </motion.li>
+                );
+              })}
+
+              {/* Kontaktkort */}
+              <motion.li
+                variants={cardVariants}
+                className={`${bigCard} border border-[#001D33] bg-[#002B49] text-white shadow-md md:col-span-2 lg:col-span-1`}
+              >
+                <div>
+                  <div className="mb-5 flex items-center gap-2.5 border-b border-white/15 pb-4 sm:mb-7 sm:pb-5">
+                    <div
+                      className="flex h-8 w-8 items-center justify-center rounded-xs bg-white/10"
                       aria-hidden="true"
-                    />
-                  </div>
-
-                  <h3 className="text-base sm:text-lg lg:text-xl font-extrabold text-[#002B49] font-heading tracking-tight mb-3 sm:mb-4 leading-snug group-hover:text-[#001D33] transition-colors">
-                    {service.title}
-                  </h3>
-
-                  <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal mb-4">
-                    {service.description}
-                  </p>
-
-                  {isHetaArbeten && onNavigateHetaArbeten && (
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onNavigateHetaArbeten();
-                      }}
-                      className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-amber-900 hover:text-amber-950 bg-amber-400/25 hover:bg-amber-400/40 border border-amber-400/50 px-3 py-2 rounded-xs transition-colors cursor-pointer w-full justify-between mt-2"
                     >
-                      <span>LÄS MER OM PAPPTAK & HETA ARBETEN</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </button>
-                  )}
-                </div>
-
-                <div className="pt-4 sm:pt-6 mt-4 sm:mt-6 border-t border-slate-200/60 flex items-center justify-between">
-                  <span className="text-[10px] sm:text-[11px] font-mono uppercase tracking-widest text-slate-500 font-medium">
-                    {isHetaArbeten ? 'CERTIFIERADE MONTÖRSTEAM' : 'NEXE FÄLTTEAM'}
-                  </span>
-                  <span
-                    className={`w-1.5 h-1.5 rounded-full transition-colors ${
-                      isHetaArbeten
-                        ? 'bg-amber-500'
-                        : 'bg-slate-300 group-hover:bg-emerald-500'
-                    }`}
-                  />
-                </div>
-              </motion.article>
-            );
-          })}
-
-          {/* 6th Card: Interactive Dynamic B2B Action Card */}
-          <motion.article
-            variants={{
-              hidden: { opacity: 0, y: 25 },
-              visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
-            }}
-            whileHover={{ y: -6 }}
-            className="group relative bg-[#002B49] text-white p-6 sm:p-8 lg:p-10 rounded-xs flex flex-col justify-between transition-all duration-300 min-h-[280px] sm:min-h-[330px] shadow-md hover:shadow-2xl border border-[#001D33]"
-          >
-            <div>
-              <div className="flex items-center justify-between pb-4 sm:pb-5 mb-5 sm:mb-7 border-b border-white/15">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-xs bg-white/10 text-white flex items-center justify-center">
-                    <MessageSquare className="w-4 h-4 text-sky-300" />
+                      <MessageSquare className="h-4 w-4 text-sky-300" />
+                    </div>
+                    <span className="font-mono text-xs font-bold tracking-widest text-sky-200">
+                      {String(installationServices.length + 1).padStart(2, '0')} /
+                      SAMARBETE
+                    </span>
                   </div>
-                  <span className="text-xs font-mono font-bold text-sky-200 tracking-widest">
-                    06 / SAMARBETE
-                  </span>
+
+                  <h4 className="mb-3 font-heading text-lg font-bold leading-snug tracking-tight sm:mb-4 lg:text-xl">
+                    Planerar ni ett projekt?
+                  </h4>
+
+                  <p className="text-sm font-normal leading-relaxed text-slate-200 sm:text-base">
+                    Behöver ni montage för specifika datum eller löpande projekt? Hör av er så går vi igenom förutsättningarna och bemanningen tillsammans.
+                  </p>
                 </div>
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-sky-400" />
-                </span>
-              </div>
 
-              <h3 className="text-base sm:text-lg lg:text-xl font-extrabold text-white font-heading tracking-tight mb-3 sm:mb-4 leading-snug">
-                ANPASSAD KAPACITET?
+                <div className="mt-4 border-t border-white/15 pt-4 sm:mt-6 sm:pt-6">
+                  <button
+                    type="button"
+                    onClick={handleContact}
+                    className={`inline-flex w-full items-center justify-center gap-2 rounded-xs bg-white px-4 py-3 font-mono text-xs font-bold uppercase tracking-wider text-[#002B49] transition-colors hover:bg-slate-100 ${focusLight}`}
+                  >
+                    <span>Prata med oss</span>
+                    <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                  </button>
+                </div>
+              </motion.li>
+            </motion.ul>
+          </div>
+
+          {/* Sidospår: ägare av befintliga anläggningar (medvetet lugnare) */}
+          <div className="mt-14 border-t border-slate-200 pt-10 sm:mt-20 sm:pt-14">
+            <div className="mb-6 max-w-3xl sm:mb-8">
+              <span className="mb-2 block font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 sm:text-xs">
+                Även för anläggningsägare
+              </span>
+              <h3 className="font-heading text-xl font-semibold tracking-tight text-[#002B49] sm:text-2xl">
+                Service och underhåll av befintliga anläggningar
               </h3>
-
-              <p className="text-sm sm:text-base text-slate-200 leading-relaxed font-normal">
-                Behöver ni ett dedikerat montageteam för specifika datum eller löpande projekt? Kontakta oss för direkt dialog om resurstillgång.
+              <p className="mt-3 text-sm leading-relaxed text-slate-600 sm:text-base">
+                Vi hjälper också fastighetsägare och BRF som har en solcellsanläggning på taket.
               </p>
             </div>
 
-            <div className="pt-4 sm:pt-6 mt-4 sm:mt-6 border-t border-white/15">
-              <button
-                type="button"
-                onClick={handleContactScroll}
-                className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-white text-[#002B49] hover:bg-slate-100 font-mono font-bold text-xs uppercase tracking-wider rounded-xs transition-colors cursor-pointer"
-              >
-                <span>BEGÄR TEAMKAPACITET</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </button>
-            </div>
-          </motion.article>
-        </motion.div>
-
-      </div>
-    </section>
+            <motion.ul
+              initial="hidden"
+              whileInView="visible"
+              viewport={viewport}
+              variants={gridVariants}
+              className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-3"
+            >
+              {ownerServices.map((service) => {
+                const Icon = service.icon;
+                return (
+                  <motion.li
+                    key={service.title}
+                    variants={cardVariants}
+                    className="rounded-xs border border-slate-200 bg-slate-50 p-5 sm:p-6"
+                  >
+                    <div
+                      className="mb-4 flex h-8 w-8 items-center justify-center rounded-xs bg-slate-200/70 text-[#002B49]"
+                      aria-hidden="true"
+                    >
+                      <Icon className="h-4 w-4" />
+                    </div>
+                    <h4 className="mb-2 font-heading text-base font-bold tracking-tight text-[#002B49]">
+                      {service.title}
+                    </h4>
+                    <p className="text-sm leading-relaxed text-slate-600">
+                      {service.description}
+                    </p>
+                  </motion.li>
+                );
+              })}
+            </motion.ul>
+          </div>
+        </div>
+      </section>
+    </MotionConfig>
   );
 };

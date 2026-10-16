@@ -1,10 +1,5 @@
 import React, { useId, useState } from 'react';
-import {
-  ArrowRight,
-  Check,
-  ChevronDown,
-  Flame,
-} from 'lucide-react';
+import { ArrowRight, Check, ChevronDown, Flame } from 'lucide-react';
 
 interface HetaArbetenPageProps {
   onContactClick: () => void;
@@ -12,6 +7,14 @@ interface HetaArbetenPageProps {
   projectImageSrc?: string;
   projectImageAlt?: string;
 }
+
+/* ---------------------------------- Datos --------------------------------- */
+
+const stats = [
+  { value: '2 000+', label: 'paneler på papptak' },
+  { value: 'SBF 506', label: 'certifierade heta arbeten' },
+  { value: '9 m', label: 'ställningsutbildning' },
+];
 
 const scope = [
   {
@@ -22,7 +25,7 @@ const scope = [
   {
     title: 'Montagesystem, paneler och kablage på taket',
     description:
-      'Montering av skenor, montagesystem och solpaneler, inklusive förläggning och infästning av cablage på taket med metallband  enligt systemets anvisningar.',
+      'Montering av skenor, montagesystem och solpaneler, inklusive förläggning och infästning av kablage på taket med metallband enligt systemets anvisningar.',
   },
   {
     title: 'Kabelkanaler och kabeldragning till växelriktaren',
@@ -45,15 +48,44 @@ const safetySteps = [
   {
     title: 'Efter arbetet',
     description:
-      'Efterbevakning genomförs enligt tillståndet. Utfört montage kontrolleras och dokumenteras enligt överenskommelse.',
+      'Efterbevakning genomförs enligt tillståndet. Utfört montage kontrolleras och dokumenteras enligt överenskommelse, bland annat med bilder på kabelvägen från tak till växelriktare.',
   },
 ];
 
 const cooperationPoints = [
   'Tydlig omfattning och ansvarsfördelning inför arbetsstart.',
   'Material tillhandahålls av beställaren. Vi har egna verktyg.',
-  'Materialhämtning och tillgång till ställning eller lift planeras i förväg.',
+  'Ställning eller lift och materialhämtning planeras i förväg. Vi har utbildning för ställning upp till 9 m.',
+  'Vi stämmer av placeringen av växelriktaren med er och dokumenterar kabelvägen med bilder.',
   'Arbetsdatum anpassas efter väder och förutsättningarna för tätskiktsarbetet.',
+];
+
+const needFromYou = [
+  'Ritningar och underlag',
+  'Antal paneler',
+  'Information om taket (typ, lutning, höjd)',
+  'Önskad placering av växelriktaren',
+];
+
+const processSteps = [
+  {
+    title: 'Ni skickar underlag',
+    description: 'Ritningar, antal paneler och information om taket.',
+  },
+  {
+    title: 'Vi går igenom förutsättningarna',
+    description:
+      'Omfattning, ansvarsfördelning, material, ställning och kabelväg stäms av.',
+  },
+  {
+    title: 'Upplägg för montage och bemanning',
+    description: 'Ni får ett tydligt förslag på tidplan och teamets bemanning.',
+  },
+  {
+    title: 'Montage och dokumentation',
+    description:
+      'Arbetet utförs enligt systemets anvisningar och dokumenteras enligt överenskommelse.',
+  },
 ];
 
 const faqs = [
@@ -72,12 +104,41 @@ const faqs = [
     answer:
       'Vi planerar tätskiktsarbetet utifrån väderförhållandena och materialtillverkarens anvisningar. Om förutsättningarna inte tillåter att arbetet utförs korrekt och säkert kommer vi överens om en ny tid.',
   },
+  {
+    question: 'Vad behöver ni från oss för att komma igång?',
+    answer:
+      'Skicka ritningar, antal paneler och information om taket, samt var växelriktaren ska placeras. Då kan vi gå igenom förutsättningarna och återkomma med ett upplägg för montage och bemanning.',
+  },
 ];
+
+/* ------------------------------ Hjälpkomponenter --------------------------- */
 
 const container = 'mx-auto max-w-7xl px-4 sm:px-6 lg:px-8';
 const eyebrow = 'text-xs font-semibold uppercase tracking-[0.18em]';
 const focus =
   'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500';
+
+const SectionHeader: React.FC<{
+  id: string;
+  eyebrowText: string;
+  title: string;
+  children?: React.ReactNode;
+}> = ({ id, eyebrowText, title, children }) => (
+  <div>
+    <p className={`${eyebrow} mb-3 text-slate-500`}>{eyebrowText}</p>
+    <h2
+      id={id}
+      className="text-balance text-2xl font-semibold leading-tight tracking-tight text-[#002B49] sm:text-4xl"
+    >
+      {title}
+    </h2>
+    {children && (
+      <p className="mt-4 leading-relaxed text-slate-600 sm:mt-5">{children}</p>
+    )}
+  </div>
+);
+
+/* ---------------------------------- Sida ----------------------------------- */
 
 export const HetaArbetenPage: React.FC<HetaArbetenPageProps> = ({
   onContactClick,
@@ -88,20 +149,37 @@ export const HetaArbetenPage: React.FC<HetaArbetenPageProps> = ({
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const faqId = useId();
 
+  // Datos estructurados para que Google pueda mostrar las FAQ como resultado enriquecido
+  const faqJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  };
+
   return (
     <div className="w-full bg-white text-slate-900 selection:bg-emerald-500 selection:text-white">
-      {/* Cabecera con compensación de altura para la barra de navegación fija */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
+
+      {/* Cabecera: el foco es el equipo de montaje; heta arbeten es la prueba de confianza */}
       <section
         aria-labelledby="papptak-title"
-        className="relative isolate overflow-hidden bg-[#002B49] text-white pt-24 pb-16 sm:pt-28 sm:pb-20 lg:pt-36 lg:pb-28"
+        className="relative isolate overflow-hidden bg-[#002B49] pt-24 text-white sm:pt-28 lg:pt-36"
       >
         <img
           src={bannerImageSrc}
           alt=""
           aria-hidden="true"
-          className="absolute inset-0 h-full w-full object-cover object-center pointer-events-none"
+          fetchPriority="high"
+          decoding="async"
+          className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center"
         />
-
         <div
           aria-hidden="true"
           className="absolute inset-0 bg-[#002B49]/85 sm:bg-[#002B49]/75 lg:bg-transparent"
@@ -113,48 +191,78 @@ export const HetaArbetenPage: React.FC<HetaArbetenPageProps> = ({
 
         <div className={`${container} relative z-10`}>
           <div className="max-w-3xl">
+            <p className={`${eyebrow} mb-4 text-emerald-200`}>
+              Underentreprenör · Solceller på papptak
+            </p>
+
             <h1
               id="papptak-title"
               className="text-balance text-3xl font-semibold leading-tight tracking-tight sm:text-5xl lg:text-6xl"
             >
-              Solcellsinstallation på papptak
+              Montageteamet för era solcellsprojekt på papptak
             </h1>
 
-            <p className="mt-4 sm:mt-5 text-lg font-medium text-emerald-200 sm:text-2xl">
-              Heta arbeten, infästningar och tätskikt
+            <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate-100 sm:mt-6 sm:text-lg">
+              Från infästningar och tätskikt till paneler och kabelförläggning. Vi har certifierade heta arbeten, ställningsutbildning och erfarenhet från projekt med över 2 000 paneler, så att ni kan lägga tiden på nästa projekt.
             </p>
 
-            <p className="mt-4 sm:mt-6 max-w-2xl text-base leading-relaxed text-slate-100 sm:text-lg">
-              Vi hjälper er med montaget på papptak, från infästningar och tillhörande tätskiktsarbete till montagesystem, paneler och kabelförläggning. Ett erfaret team som arbetar som underentreprenör i era projekt.
-            </p>
-
-            <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+            <div className="mt-8 flex flex-col items-stretch gap-4 sm:flex-row sm:items-center">
               <button
                 type="button"
                 onClick={onContactClick}
-                className={`w-full sm:w-auto inline-flex items-center justify-center gap-3 rounded-lg bg-white px-7 py-3.5 font-semibold text-[#002B49] shadow-sm transition hover:bg-slate-100 active:scale-[0.99] ${focus}`}
+                className={`inline-flex w-full items-center justify-center gap-3 rounded-lg bg-white px-7 py-3.5 font-semibold text-[#002B49] shadow-sm transition hover:bg-slate-100 active:scale-[0.99] sm:w-auto ${focus}`}
               >
                 <span>Prata med oss om ert projekt</span>
                 <ArrowRight size={18} aria-hidden="true" />
               </button>
 
-              <div className="inline-flex items-center gap-3 rounded-lg bg-white/10 backdrop-blur-xs px-4 py-2.5 border border-white/15 text-slate-200">
-                <img
-                  src="/Svebra-konceptagare-brandfarliga-heta-arbeten.png"
-                  alt="Svensk Certifiering SBF 2022 - Konceptägare Brandfarliga Heta Arbeten"
-                  className="h-10 w-auto shrink-0 drop-shadow-sm"
-                />
-                <div className="text-xs leading-tight">
-                  <span className="block font-semibold text-white">SBF 2022 & SBF 506</span>
-                  <span className="text-slate-300">Konceptägare: SVEBRA</span>
+              <a
+                href="#scope-title"
+                className={`inline-flex w-full items-center justify-center rounded-lg border border-white/30 px-6 py-3.5 font-medium text-white transition hover:bg-white/10 sm:w-auto ${focus}`}
+              >
+                Se vad vi utför
+              </a>
+            </div>
+          </div>
+
+          {/* Cifras clave + certificación */}
+          <div className="mt-12 grid items-center gap-8 border-t border-white/15 py-8 sm:mt-16 lg:grid-cols-[1fr_auto] lg:gap-12">
+            <dl className="grid grid-cols-3 gap-x-4 gap-y-6 sm:gap-x-6">
+              {stats.map((stat) => (
+                <div key={stat.label}>
+                  <dt className="sr-only">{stat.label}</dt>
+                  <dd>
+                    <span className="block text-2xl font-semibold tracking-tight sm:text-3xl">
+                      {stat.value}
+                    </span>
+                    <span className="mt-1 block text-xs leading-snug text-slate-300 sm:text-sm">
+                      {stat.label}
+                    </span>
+                  </dd>
                 </div>
+              ))}
+            </dl>
+
+            <div className="inline-flex items-center gap-3 rounded-lg border border-white/15 bg-white/10 px-4 py-2.5 text-slate-200 backdrop-blur-sm">
+              <img
+                src="/Svebra-konceptagare-brandfarliga-heta-arbeten.png"
+                alt="Svensk Certifiering SBF 2022 - Konceptägare Brandfarliga Heta Arbeten"
+                width={80}
+                height={40}
+                className="h-10 w-auto shrink-0 drop-shadow-sm"
+              />
+              <div className="text-xs leading-tight">
+                <span className="block font-semibold text-white">
+                  SBF 2022 & SBF 506
+                </span>
+                <span className="text-slate-300">Konceptägare: SVEBRA</span>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Experiencia del equipo */}
+      {/* Experiencia */}
       <section
         aria-labelledby="experience-title"
         className="border-b border-slate-200 py-14 sm:py-20 lg:py-24"
@@ -162,47 +270,37 @@ export const HetaArbetenPage: React.FC<HetaArbetenPageProps> = ({
         <div className={container}>
           <div className="grid items-start gap-10 lg:grid-cols-2 lg:gap-16">
             <div>
-              <p className={`${eyebrow} mb-3 text-slate-500`}>
-                Teamets erfarenhet
-              </p>
-
-              <h2
+              <SectionHeader
                 id="experience-title"
-                className="text-balance text-2xl font-semibold leading-tight tracking-tight text-[#002B49] sm:text-4xl"
+                eyebrowText="Teamets erfarenhet"
+                title="Erfarenhet av papptak i stor skala."
               >
-                Erfarenhet av papptak i stor skala.
-              </h2>
-
-              <p className="mt-5 leading-relaxed text-slate-600 sm:text-base">
-                Vårt team har omfattande erfarenhet av solcellsinstallationer på papptak, inklusive projekt med över 2 000 paneler. Den erfarenheten tar vi med oss in i varje uppdrag hos NEXE SOLAR.
-              </p>
+                Vårt team har omfattande erfarenhet av solcellsinstallationer på papptak, inklusive projekt med över 2 000 paneler, bland annat i bostads- och BRF-projekt. Den erfarenheten tar vi med oss in i varje uppdrag hos NEXE SOLAR.
+              </SectionHeader>
 
               <p className="mt-4 leading-relaxed text-slate-600 sm:text-base">
                 Vi är vana vid arbetet med infästningar, tätskikt och montage på större takytor, där planering och samordning är en del av det dagliga arbetet.
               </p>
             </div>
 
-            <div className="border-t border-emerald-500 pt-6 sm:border-t-0 sm:border-l-2 sm:py-2 sm:pl-10">
+            <div className="border-t border-emerald-500 pt-6 sm:border-l-2 sm:border-t-0 sm:py-2 sm:pl-10">
               <p className="text-sm font-medium text-slate-500">
                 Erfarenhet från projekt med
               </p>
-
               <p className="mt-2 text-4xl font-semibold tracking-tight text-[#002B49] sm:text-6xl lg:text-7xl">
                 över 2 000
               </p>
-
-              <p className="mt-2 text-lg sm:text-xl font-medium text-[#002B49]">
+              <p className="mt-2 text-lg font-medium text-[#002B49] sm:text-xl">
                 solpaneler på papptak
               </p>
-
-              <p className="mt-4 max-w-sm text-xs sm:text-sm leading-relaxed text-slate-500">
+              <p className="mt-4 max-w-sm text-xs leading-relaxed text-slate-500 sm:text-sm">
                 Avser teamets samlade yrkeserfarenhet, även före NEXE SOLAR.
               </p>
             </div>
           </div>
 
           {projectImageSrc && (
-            <figure className="mt-10 sm:mt-14 overflow-hidden rounded-xl border border-slate-200 shadow-sm">
+            <figure className="mt-10 overflow-hidden rounded-xl border border-slate-200 shadow-sm sm:mt-14">
               <img
                 src={projectImageSrc}
                 alt={projectImageAlt}
@@ -215,35 +313,26 @@ export const HetaArbetenPage: React.FC<HetaArbetenPageProps> = ({
         </div>
       </section>
 
-      {/* Alcance del servicio */}
+      {/* Alcance */}
       <section
         aria-labelledby="scope-title"
-        className="py-14 sm:py-20 lg:py-24"
+        className="scroll-mt-20 py-14 sm:py-20 lg:py-24"
       >
         <div className={container}>
           <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
-            <div>
-              <p className={`${eyebrow} mb-3 text-slate-500`}>
-                Vårt uppdrag
-              </p>
+            <SectionHeader
+              id="scope-title"
+              eyebrowText="Vårt uppdrag"
+              title="Montaget, från infästning till panel."
+            >
+              Vi anpassar omfattningen efter ert projekt och arbetar enligt överenskommet underlag och tillverkarens anvisningar.
+            </SectionHeader>
 
-              <h2
-                id="scope-title"
-                className="text-balance text-2xl font-semibold tracking-tight text-[#002B49] sm:text-4xl"
-              >
-                Montaget, från infästning till panel.
-              </h2>
-
-              <p className="mt-4 sm:mt-5 leading-relaxed text-slate-600">
-                Vi anpassar omfattningen efter ert projekt och arbetar enligt överenskommet underlag och tillverkarens anvisningar.
-              </p>
-            </div>
-
-            <div className="divide-y divide-slate-200 border-y border-slate-200">
+            <ol className="divide-y divide-slate-200 border-y border-slate-200">
               {scope.map((item, index) => (
-                <div
+                <li
                   key={item.title}
-                  className="flex flex-col sm:flex-row gap-2 sm:gap-5 py-6 sm:py-7"
+                  className="flex flex-col gap-2 py-6 sm:flex-row sm:gap-5 sm:py-7"
                 >
                   <span
                     className="font-mono text-xs font-semibold text-emerald-600 sm:pt-1"
@@ -251,24 +340,22 @@ export const HetaArbetenPage: React.FC<HetaArbetenPageProps> = ({
                   >
                     0{index + 1}
                   </span>
-
                   <div>
                     <h3 className="text-lg font-semibold text-[#002B49]">
                       {item.title}
                     </h3>
-
-                    <p className="mt-2 text-sm sm:text-base leading-relaxed text-slate-600">
+                    <p className="mt-2 text-sm leading-relaxed text-slate-600 sm:text-base">
                       {item.description}
                     </p>
                   </div>
-                </div>
+                </li>
               ))}
-            </div>
+            </ol>
           </div>
         </div>
       </section>
 
-      {/* Heta arbeten */}
+      {/* Heta arbeten (ahora como garantía de seguridad, no como protagonista) */}
       <section
         aria-labelledby="safety-title"
         className="bg-slate-100 py-14 sm:py-20 lg:py-24"
@@ -282,65 +369,52 @@ export const HetaArbetenPage: React.FC<HetaArbetenPageProps> = ({
                 <Flame size={17} className="text-amber-600" aria-hidden="true" />
                 Heta arbeten
               </p>
-
               <h2
                 id="safety-title"
                 className="text-balance text-2xl font-semibold leading-tight tracking-tight text-[#002B49] sm:text-4xl"
               >
                 Brandskydd före, under och efter arbetet.
               </h2>
-
-              <p className="mt-4 sm:mt-6 text-base sm:text-lg leading-relaxed text-slate-600">
+              <p className="mt-4 text-base leading-relaxed text-slate-600 sm:mt-6 sm:text-lg">
                 När infästningar monteras med värme på papptak ingår brandskyddet i planeringen. De montörer som utför brandfarliga heta arbeten har giltiga personcertifikat. Vi arbetar enligt säkerhetsreglerna i SBF 506.
               </p>
             </div>
 
-            <div className="lg:col-span-5">
-              <div className="flex flex-col sm:flex-row items-center gap-5 rounded-xl bg-white p-6 shadow-sm border border-slate-200">
+            <div className="flex items-center justify-center lg:col-span-5 lg:justify-end">
+              <div className="w-full max-w-lg overflow-hidden rounded-2xl border border-slate-200/90 bg-white p-6 shadow-sm transition-shadow hover:shadow-md sm:p-8">
                 <img
-                  src="/Svebra-konceptagare-brandfarliga-heta-arbeten.png"
-                  alt="Svensk Certifiering SBF 2022 - Konceptägare Brandfarliga Heta Arbeten SVEBRA"
-                  className="h-28 sm:h-32 w-auto shrink-0 object-contain"
+                  src="/svebra-brandfarliga-heta-arbeten-full.png"
+                  alt="SVEBRA Brandfarliga Arbeten • Svensk Certifiering SBF 2022 • Konceptägare Brandfarliga Heta Arbeten"
+                  className="mx-auto h-auto w-full object-contain"
+                  loading="lazy"
+                  decoding="async"
                 />
-                <div className="text-center sm:text-left">
-                  <span className="inline-block text-[11px] font-mono font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-sm border border-emerald-200">
-                    SBF 2022 &bull; SBF 506
-                  </span>
-                  <h3 className="mt-2 text-base font-bold text-[#002B49]">
-                    SVEBRA Konceptägare
-                  </h3>
-                  <p className="mt-1 text-xs sm:text-sm leading-relaxed text-slate-600">
-                    Certifiering för brandfarliga heta arbeten på tillfällig arbetsplats enligt försäkringsbolagens och Brandskyddsföreningens normer.
-                  </p>
-                </div>
               </div>
             </div>
           </div>
 
-          <div className="mt-10 sm:mt-14 grid gap-6 sm:gap-8 md:grid-cols-3">
+          <ol className="mt-10 grid gap-6 sm:mt-14 sm:gap-8 md:grid-cols-3">
             {safetySteps.map((step, index) => (
-              <div
+              <li
                 key={step.title}
-                className="rounded-lg bg-white p-6 shadow-sm border border-slate-200/60"
+                className="rounded-lg border border-slate-200/60 bg-white p-6 shadow-sm"
               >
                 <span className="font-mono text-xs font-bold text-emerald-600">
                   STEG 0{index + 1}
                 </span>
-
                 <h3 className="mt-3 text-lg font-semibold text-[#002B49]">
                   {step.title}
                 </h3>
-
                 <p className="mt-2.5 text-sm leading-relaxed text-slate-600">
                   {step.description}
                 </p>
-              </div>
+              </li>
             ))}
-          </div>
+          </ol>
         </div>
       </section>
 
-      {/* Colaboración */}
+      {/* Colaboración + qué necesitamos */}
       <section
         aria-labelledby="cooperation-title"
         className="py-14 sm:py-20 lg:py-24"
@@ -348,27 +422,38 @@ export const HetaArbetenPage: React.FC<HetaArbetenPageProps> = ({
         <div className={container}>
           <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
             <div>
-              <p className={`${eyebrow} mb-3 text-slate-500`}>
-                Samarbeta med oss
-              </p>
-
-              <h2
+              <SectionHeader
                 id="cooperation-title"
-                className="text-balance text-2xl font-semibold tracking-tight text-[#002B49] sm:text-4xl"
+                eyebrowText="Samarbeta med oss"
+                title="Ett montageteam för era projekt."
               >
-                Ett montageteam för era projekt.
-              </h2>
+                Skicka underlag så går vi igenom förutsättningarna med er och återkommer med ett upplägg för montage och bemanning.
+              </SectionHeader>
 
-              <p className="mt-4 sm:mt-6 leading-relaxed text-slate-600">
-                Skicka ritningar, antal paneler och information om taket. Vi går igenom förutsättningarna med er och återkommer med ett upplägg för montage och bemanning.
-              </p>
+              <div className="mt-8 rounded-lg border border-slate-200 bg-slate-50 p-5 sm:p-6">
+                <h3 className="text-sm font-semibold text-[#002B49]">
+                  Det här behöver vi för att komma igång
+                </h3>
+                <ul className="mt-3 space-y-2 text-sm text-slate-600">
+                  {needFromYou.map((item) => (
+                    <li key={item} className="flex items-start gap-2.5">
+                      <Check
+                        size={16}
+                        className="mt-0.5 shrink-0 text-emerald-600"
+                        aria-hidden="true"
+                      />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
 
             <ul className="space-y-4 sm:space-y-5 lg:pt-6">
               {cooperationPoints.map((item) => (
                 <li
                   key={item}
-                  className="flex items-start gap-3 text-sm sm:text-base leading-relaxed text-slate-700"
+                  className="flex items-start gap-3 text-sm leading-relaxed text-slate-700 sm:text-base"
                 >
                   <Check
                     size={20}
@@ -383,7 +468,41 @@ export const HetaArbetenPage: React.FC<HetaArbetenPageProps> = ({
         </div>
       </section>
 
-      {/* Preguntas frecuentes */}
+      {/* Proceso */}
+      <section
+        aria-labelledby="process-title"
+        className="bg-slate-50 py-14 sm:py-20"
+      >
+        <div className={container}>
+          <h2
+            id="process-title"
+            className="mb-8 text-2xl font-semibold tracking-tight text-[#002B49] sm:mb-10 sm:text-3xl"
+          >
+            Så går ett samarbete till
+          </h2>
+
+          <ol className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {processSteps.map((step, index) => (
+              <li
+                key={step.title}
+                className="border-t-2 border-emerald-500 pt-4"
+              >
+                <span className="font-mono text-xs font-bold text-emerald-600">
+                  0{index + 1}
+                </span>
+                <h3 className="mt-2 text-base font-semibold text-[#002B49]">
+                  {step.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                  {step.description}
+                </p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      {/* FAQ */}
       <section
         aria-labelledby="faq-title"
         className="border-t border-slate-200 py-14 sm:py-20"
@@ -391,7 +510,7 @@ export const HetaArbetenPage: React.FC<HetaArbetenPageProps> = ({
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <h2
             id="faq-title"
-            className="mb-6 sm:mb-8 text-2xl sm:text-3xl font-semibold tracking-tight text-[#002B49]"
+            className="mb-6 text-2xl font-semibold tracking-tight text-[#002B49] sm:mb-8 sm:text-3xl"
           >
             Frågor inför ett samarbete
           </h2>
@@ -411,13 +530,13 @@ export const HetaArbetenPage: React.FC<HetaArbetenPageProps> = ({
                       aria-expanded={isOpen}
                       aria-controls={panelId}
                       onClick={() => setOpenFaq(isOpen ? null : index)}
-                      className={`flex w-full items-center justify-between gap-4 py-5 sm:py-6 text-left font-semibold text-[#002B49] transition hover:text-emerald-700 ${focus} rounded`}
+                      className={`flex w-full items-center justify-between gap-4 rounded py-5 text-left font-semibold text-[#002B49] transition hover:text-emerald-700 sm:py-6 ${focus}`}
                     >
                       <span className="text-base sm:text-lg">{faq.question}</span>
                       <ChevronDown
                         size={18}
                         aria-hidden="true"
-                        className={`shrink-0 transition-transform duration-200 ${
+                        className={`shrink-0 transition-transform duration-200 motion-reduce:transition-none ${
                           isOpen ? 'rotate-180 text-emerald-600' : 'text-slate-400'
                         }`}
                       />
@@ -428,12 +547,13 @@ export const HetaArbetenPage: React.FC<HetaArbetenPageProps> = ({
                     id={panelId}
                     role="region"
                     aria-labelledby={buttonId}
-                    className={`grid transition-[grid-template-rows] duration-200 ease-out ${
+                    aria-hidden={!isOpen}
+                    className={`grid transition-[grid-template-rows] duration-200 ease-out motion-reduce:transition-none ${
                       isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
                     }`}
                   >
                     <div className="overflow-hidden">
-                      <p className="pb-5 sm:pb-6 text-sm sm:text-base leading-relaxed text-slate-600">
+                      <p className="pb-5 text-sm leading-relaxed text-slate-600 sm:pb-6 sm:text-base">
                         {faq.answer}
                       </p>
                     </div>
@@ -442,6 +562,32 @@ export const HetaArbetenPage: React.FC<HetaArbetenPageProps> = ({
               );
             })}
           </div>
+        </div>
+      </section>
+
+      {/* CTA final */}
+      <section
+        aria-labelledby="cta-title"
+        className="bg-[#002B49] py-14 text-white sm:py-20"
+      >
+        <div className={`${container} text-center`}>
+          <h2
+            id="cta-title"
+            className="text-balance text-2xl font-semibold tracking-tight sm:text-4xl"
+          >
+            Har ni ett papptak som ska monteras?
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-slate-200 sm:text-lg">
+            Skicka ritningar, antal paneler och information om taket så återkommer vi med ett upplägg för montage och bemanning.
+          </p>
+          <button
+            type="button"
+            onClick={onContactClick}
+            className={`mt-8 inline-flex items-center justify-center gap-3 rounded-lg bg-white px-7 py-3.5 font-semibold text-[#002B49] shadow-sm transition hover:bg-slate-100 active:scale-[0.99] ${focus}`}
+          >
+            <span>Prata med oss om ert projekt</span>
+            <ArrowRight size={18} aria-hidden="true" />
+          </button>
         </div>
       </section>
     </div>
