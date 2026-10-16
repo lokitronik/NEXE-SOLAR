@@ -137,6 +137,18 @@ export const HetaArbetenPage: React.FC<HetaArbetenPageProps> = ({
                 <span>Prata med oss om ert projekt</span>
                 <ArrowRight size={18} aria-hidden="true" />
               </button>
+
+              <div className="inline-flex items-center gap-3 rounded-lg bg-white/10 backdrop-blur-xs px-4 py-2.5 border border-white/15 text-slate-200">
+                <img
+                  src="/Svebra-konceptagare-brandfarliga-heta-arbeten.png"
+                  alt="Svensk Certifiering SBF 2022 - Konceptägare Brandfarliga Heta Arbeten"
+                  className="h-10 w-auto shrink-0 drop-shadow-sm"
+                />
+                <div className="text-xs leading-tight">
+                  <span className="block font-semibold text-white">SBF 2022 & SBF 506</span>
+                  <span className="text-slate-300">Konceptägare: SVEBRA</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -262,24 +274,47 @@ export const HetaArbetenPage: React.FC<HetaArbetenPageProps> = ({
         className="bg-slate-100 py-14 sm:py-20 lg:py-24"
       >
         <div className={container}>
-          <div className="max-w-3xl">
-            <p
-              className={`${eyebrow} mb-3 flex items-center gap-2 text-[#002B49]`}
-            >
-              <Flame size={17} className="text-amber-600" aria-hidden="true" />
-              Heta arbeten
-            </p>
+          <div className="grid gap-8 lg:grid-cols-12 lg:items-center">
+            <div className="lg:col-span-7">
+              <p
+                className={`${eyebrow} mb-3 flex items-center gap-2 text-[#002B49]`}
+              >
+                <Flame size={17} className="text-amber-600" aria-hidden="true" />
+                Heta arbeten
+              </p>
 
-            <h2
-              id="safety-title"
-              className="text-balance text-2xl font-semibold leading-tight tracking-tight text-[#002B49] sm:text-4xl"
-            >
-              Brandskydd före, under och efter arbetet.
-            </h2>
+              <h2
+                id="safety-title"
+                className="text-balance text-2xl font-semibold leading-tight tracking-tight text-[#002B49] sm:text-4xl"
+              >
+                Brandskydd före, under och efter arbetet.
+              </h2>
 
-            <p className="mt-4 sm:mt-6 text-base sm:text-lg leading-relaxed text-slate-600">
-              När infästningar monteras med värme på papptak ingår brandskyddet i planeringen. De montörer som utför brandfarliga heta arbeten har giltiga personcertifikat. Vi arbetar enligt säkerhetsreglerna i SBF 506.
-            </p>
+              <p className="mt-4 sm:mt-6 text-base sm:text-lg leading-relaxed text-slate-600">
+                När infästningar monteras med värme på papptak ingår brandskyddet i planeringen. De montörer som utför brandfarliga heta arbeten har giltiga personcertifikat. Vi arbetar enligt säkerhetsreglerna i SBF 506.
+              </p>
+            </div>
+
+            <div className="lg:col-span-5">
+              <div className="flex flex-col sm:flex-row items-center gap-5 rounded-xl bg-white p-6 shadow-sm border border-slate-200">
+                <img
+                  src="/Svebra-konceptagare-brandfarliga-heta-arbeten.png"
+                  alt="Svensk Certifiering SBF 2022 - Konceptägare Brandfarliga Heta Arbeten SVEBRA"
+                  className="h-28 sm:h-32 w-auto shrink-0 object-contain"
+                />
+                <div className="text-center sm:text-left">
+                  <span className="inline-block text-[11px] font-mono font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-sm border border-emerald-200">
+                    SBF 2022 &bull; SBF 506
+                  </span>
+                  <h3 className="mt-2 text-base font-bold text-[#002B49]">
+                    SVEBRA Konceptägare
+                  </h3>
+                  <p className="mt-1 text-xs sm:text-sm leading-relaxed text-slate-600">
+                    Certifiering för brandfarliga heta arbeten på tillfällig arbetsplats enligt försäkringsbolagens och Brandskyddsföreningens normer.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="mt-10 sm:mt-14 grid gap-6 sm:gap-8 md:grid-cols-3">
