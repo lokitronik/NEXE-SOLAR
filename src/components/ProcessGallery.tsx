@@ -56,7 +56,7 @@ const photos: ProcessPhoto[] = [
     id: 'panel',
     src: '/images/process/Panel.jpeg',
     alt: 'Färdigställd solcellsanläggning med svarta solpaneler installerade på taket',
-    caption: 'Färdig anläggning',
+    caption: 'Färdigställd solcellsanläggning',
     widthClass: cardWidth,
     aspectRatio: 'aspect-[3/4]',
   },
